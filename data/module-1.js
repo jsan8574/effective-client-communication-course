@@ -29,7 +29,7 @@
     instructions: "Match each urgency/sensitivity combination to the channel the facilitator notes recommend.",
     pairs: [
       { left: "High urgency + High sensitivity", right: "Call or in-person" },
-      { left: "High urgency + Low sensitivity", right: "Teams / Slack / chat" },
+      { left: "High urgency + Low sensitivity", right: "Teams / chat" },
       { left: "Low urgency + High sensitivity", right: "Email with a clear summary" },
       { left: "Low urgency + Low sensitivity", right: "Asynchronous update" }
     ],
