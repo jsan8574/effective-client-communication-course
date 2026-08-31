@@ -53,7 +53,7 @@
 
   window.MODULE_DATA.aeofSeq = {
     moduleId: "m3", activityId: "aeofSeq",
-    instructions: "Put the A-E-O-F framework back in order.",
+    instructions: "Put the A-E-O-F framework back in order — you've got this, {name}.",
     steps: [
       { id:"ack", text:"Acknowledge — Recognize the client's concern. “I understand the delay in the report is concerning.”", order:1 },
       { id:"exp", text:"Explain — Clarify the situation with facts. “The delay happened due to additional validation needed for the data.”", order:2 },

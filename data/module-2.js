@@ -3,7 +3,7 @@
 
   window.MODULE_DATA.storySeq = {
     moduleId: "m2", activityId: "storySeq",
-    instructions: "Put these four lines back in Problem → Insight → Action → Impact order.",
+    instructions: "Put these four lines back in Problem → Insight → Action → Impact order, {name}.",
     steps: [
       { id: "p", text: "Problem: “I noticed I was always tired in the afternoon.”", order: 1 },
       { id: "i", text: "Insight: “I realized I was skipping breakfast.”", order: 2 },

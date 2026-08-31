@@ -20,10 +20,18 @@
       return str.replace(/\{name\}/g, name);
     }
     // No name yet: drop the vocative gracefully rather than printing "{name}".
-    return str
+    // When the token opens the string ("{name}, match each…"), stripping it
+    // leaves a lowercase word at the very start of the sentence — recapitalize
+    // that one case rather than shipping "match each…" as a sentence opener.
+    var startedWithVocative = /^\{name\},\s*/.test(str);
+    var out = str
       .replace(/,\s*\{name\}\s*,/g, ",")
       .replace(/\{name\},\s*/g, "")
       .replace(/\{name\}/g, "you");
+    if (startedWithVocative && out){
+      out = out.charAt(0).toUpperCase() + out.slice(1);
+    }
+    return out;
   }
 
   window.Personalize = { text: personalize, firstName: firstName };

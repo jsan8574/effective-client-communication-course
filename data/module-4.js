@@ -3,7 +3,7 @@
 
   window.MODULE_DATA.sparkCards = {
     moduleId: "m4", activityId: "sparkCards",
-    instructions: "“Skills get you results. SPARK earns you trust.” Explore each trait the interview scene demonstrates.",
+    instructions: "“Skills get you results. SPARK earns you trust.” Explore each trait the interview scene demonstrates, {name}.",
     cards: [
       { label: "S — Straightforwardness", back: "<strong>Authenticity.</strong> Being honest about your situation, even when it's uncomfortable, builds trust and credibility faster than a polished story would." },
       { label: "P — Preparedness", back: "<strong>Preparation.</strong> Knowledge and understanding of the subject shine through even in an unplanned, imperfect moment — because the prep happened long before this conversation." },

@@ -43,7 +43,7 @@
 
   window.MODULE_DATA.glossaryCards = {
     moduleId: "m5", activityId: "glossaryCards",
-    instructions: "Ten terms that come up constantly in client communication. Explore each definition.",
+    instructions: "{name}, ten terms that come up constantly in client communication — explore each definition.",
     cards: [
       { label:"Accountability", back:"Taking responsibility for one's actions and decisions in client interactions — being reliable, meeting commitments, and owning mistakes to build trust and credibility." },
       { label:"Proactive", back:"Taking initiative to anticipate and address client needs and potential issues before they arise, rather than only reacting once something breaks." },

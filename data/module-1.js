@@ -26,7 +26,7 @@
 
   window.MODULE_DATA.channelMatch = {
     moduleId: "m1", activityId: "channelMatch",
-    instructions: "Match each urgency/sensitivity combination to the channel the facilitator notes recommend.",
+    instructions: "{name}, match each urgency/sensitivity combination to the channel the facilitator notes recommend.",
     pairs: [
       { left: "High urgency + High sensitivity", right: "Call or in-person" },
       { left: "High urgency + Low sensitivity", right: "Teams / chat" },
