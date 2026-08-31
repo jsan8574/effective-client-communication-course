@@ -39,7 +39,7 @@
     ul.style.margin = "0";
     ul.style.paddingLeft = "18px";
     points.forEach(function(p){
-      var li = el("li", null, p);
+      var li = el("li", null, Personalize.text(p));
       li.style.marginBottom = "4px";
       ul.appendChild(li);
     });
@@ -62,7 +62,7 @@
     var status = el("span","activity-status");
     head.appendChild(status);
     container.appendChild(head);
-    if (data.instructions) container.appendChild(el("div","activity-instructions",data.instructions));
+    if (data.instructions) container.appendChild(el("div","activity-instructions",Personalize.text(data.instructions)));
 
     var grid = el("div","flip-grid");
     container.appendChild(grid);
@@ -112,7 +112,7 @@
     var status = el("span","activity-status");
     head.appendChild(status);
     container.appendChild(head);
-    if (data.instructions) container.appendChild(el("div","activity-instructions",data.instructions));
+    if (data.instructions) container.appendChild(el("div","activity-instructions",Personalize.text(data.instructions)));
 
     var wrap = el("div","match-wrap");
     var leftCol = el("div","match-col");
@@ -202,7 +202,7 @@
     var status = el("span","activity-status");
     head.appendChild(status);
     container.appendChild(head);
-    if (data.instructions) container.appendChild(el("div","activity-instructions",data.instructions));
+    if (data.instructions) container.appendChild(el("div","activity-instructions",Personalize.text(data.instructions)));
     container.appendChild(el("div","sort-hint","Tap a card to select it, then tap “+ Place selected card here” in the bucket where it belongs. (Mouse users can also drag.)"));
 
     var pool = el("div","sort-pool");
@@ -385,7 +385,7 @@
     var status = el("span","activity-status");
     head.appendChild(status);
     container.appendChild(head);
-    if (data.instructions) container.appendChild(el("div","activity-instructions",data.instructions));
+    if (data.instructions) container.appendChild(el("div","activity-instructions",Personalize.text(data.instructions)));
 
     var list = el("div","seq-list");
     container.appendChild(list);
@@ -476,8 +476,8 @@
     var status = el("span","activity-status");
     head.appendChild(status);
     container.appendChild(head);
-    if (data.instructions) container.appendChild(el("div","activity-instructions",data.instructions));
-    if (data.scenario) container.appendChild(el("div","sim-scenario",data.scenario));
+    if (data.instructions) container.appendChild(el("div","activity-instructions",Personalize.text(data.instructions)));
+    if (data.scenario) container.appendChild(el("div","sim-scenario",Personalize.text(data.scenario)));
 
     var progressWrap = el("div","sim-progress");
     data.steps.forEach(function(){ progressWrap.appendChild(el("span")); });
@@ -517,7 +517,7 @@
         btn.addEventListener("click", function(){
           Array.prototype.forEach.call(choicesWrap.querySelectorAll("button"), function(b){ b.disabled = true; });
           if (feedbackBox) feedbackBox.remove();
-          feedbackBox = el("div","sim-feedback " + (choice.correct ? "correct" : "incorrect"), choice.feedback);
+          feedbackBox = el("div","sim-feedback " + (choice.correct ? "correct" : "incorrect"), Personalize.text(choice.feedback));
           body.appendChild(feedbackBox);
           state.log.push({ step: step.id, choice: choice.text, correct: choice.correct });
           Storage.saveActivityState(data.moduleId, data.activityId, state);

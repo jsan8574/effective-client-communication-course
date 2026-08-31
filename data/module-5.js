@@ -10,7 +10,7 @@
       { label: "Act on Insights", back: "Implement changes based on feedback, and communicate those improvements back to the client — so they see their input actually mattered." }
     ],
     coachingPoints: [
-      "The loop only closes at “Act on Insights.” Soliciting feedback you never visibly act on is worse than not asking — it teaches clients their input doesn't matter.",
+      "{name}, the loop only closes at “Act on Insights.” Soliciting feedback you never visibly act on is worse than not asking — it teaches clients their input doesn't matter.",
       "A feedback-friendly culture has to be demonstrated, not declared. Openly welcoming one piece of criticism does more than any number of “we value your feedback” lines."
     ]
   };
@@ -37,7 +37,7 @@
     ],
     coachingPoints: [
       "Most communication breakdowns happen because teams over-invest in In-Meeting polish and under-invest in Pre-Call preparation and Post-Call documentation.",
-      "“Document Conversations” isn't busywork — it's what lets you prove what was agreed to the next time expectations drift."
+      "One to remember, {name}: “Document Conversations” isn't busywork — it's what lets you prove what was agreed to the next time expectations drift."
     ]
   };
 
@@ -58,7 +58,7 @@
     ],
     coachingPoints: [
       "Notice how many of these terms link back to earlier modules: Recap is A-E-O-F's Follow-Up, Delays is Module 1's Inform level, Proactive is the Pre-Call habit from this module.",
-      "These aren't buzzwords — each one is a specific, observable behavior you can point to in a real conversation."
+      "These aren't buzzwords, {name} — each one is a specific, observable behavior you can point to in a real conversation."
     ]
   };
 

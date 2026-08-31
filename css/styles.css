@@ -47,7 +47,7 @@
   --font-head: "Manrope", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-body: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
 
-  --maxw: 980px;
+  --maxw: 1160px;
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
@@ -56,9 +56,19 @@ body{
   margin:0;
   font-family:var(--font-body);
   color:var(--text-main);
-  background:var(--bg-page);
   line-height:1.55;
   -webkit-font-smoothing:antialiased;
+  /* Full-bleed wash so wide/maximized viewports read as a deliberate canvas
+     rather than empty leftover space on either side of the content column. */
+  background:
+    radial-gradient(1100px 620px at 12% -8%, rgba(38,131,198,.07), transparent 60%),
+    radial-gradient(900px 520px at 100% 4%, rgba(87,182,192,.06), transparent 55%),
+    radial-gradient(700px 500px at 50% 100%, rgba(118,189,167,.05), transparent 60%),
+    var(--bg-page);
+  background-attachment:fixed;
+}
+@media (max-width:900px){
+  body{ background-attachment:scroll; } /* fixed backgrounds can jank on mobile scroll */
 }
 h1,h2,h3,h4{
   font-family:var(--font-head);
@@ -87,18 +97,30 @@ button{ font-family:inherit; }
 }
 .site-header .container{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
 .brand{ display:flex; align-items:center; gap:10px; font-family:var(--font-head); font-weight:800; font-size:1.05rem; color:var(--text-inverse); text-decoration:none; }
-.brand-mark{
-  width:34px; height:34px; border-radius:9px;
-  background:linear-gradient(135deg,var(--c-primary),var(--c-cyan));
-  display:flex; align-items:center; justify-content:center;
-  font-weight:800; color:#fff; font-size:.95rem; flex:none;
-}
 .header-progress{ display:flex; align-items:center; gap:12px; font-size:.85rem; color:var(--c-pale); }
 .header-progress .bar{ width:120px; height:8px; border-radius:5px; background:rgba(255,255,255,.18); overflow:hidden; }
 .header-progress .bar > span{ display:block; height:100%; background:linear-gradient(90deg,var(--c-cyan),var(--c-primary)); border-radius:5px; transition:width .4s ease; }
 .header-links{ display:flex; gap:14px; font-size:.85rem; }
 .header-links a{ color:var(--c-pale); text-decoration:none; }
 .header-links a:hover{ color:#fff; }
+
+/* ---------------- name gate ---------------- */
+.name-gate-overlay{
+  position:fixed; inset:0; background:rgba(20,26,32,.6); backdrop-filter:blur(2px);
+  display:flex; align-items:center; justify-content:center; z-index:500; padding:20px;
+}
+.name-gate-card{
+  background:#fff; border-radius:var(--radius-lg); box-shadow:var(--shadow-lg);
+  padding:32px 28px; max-width:380px; width:100%; text-align:center;
+}
+.name-gate-badge{ font-size:2rem; margin-bottom:6px; }
+.name-gate-card h2{ margin-bottom:8px; }
+.name-gate-card p{ color:var(--text-muted); font-size:.9rem; }
+.name-gate-card input{
+  width:100%; padding:11px 14px; margin:6px 0 4px; border:1.5px solid var(--border-soft);
+  border-radius:8px; font-size:.95rem; font-family:inherit; text-align:center;
+}
+.name-gate-card input:focus{ outline:none; border-color:var(--accent); }
 
 /* ---------------- hero ---------------- */
 .hero{
@@ -193,15 +215,31 @@ table.data-table th{ background:var(--bg-subtle); font-family:var(--font-head); 
 
 /* ---- flip cards ---- */
 .flip-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; }
-.flip-card{ perspective:1200px; height:170px; cursor:pointer; }
+.flip-card{ perspective:1200px; height:210px; cursor:pointer; }
 .flip-card-inner{ position:relative; width:100%; height:100%; transition:transform .5s cubic-bezier(.2,.9,.3,1); transform-style:preserve-3d; }
 .flip-card.flipped .flip-card-inner{ transform:rotateY(180deg); }
 .flip-face{ position:absolute; inset:0; backface-visibility:hidden; border-radius:var(--radius-md); padding:16px; display:flex; flex-direction:column; justify-content:center; }
 .flip-front{ background:linear-gradient(150deg,var(--c-teal-blue),var(--c-primary)); color:#fff; align-items:center; text-align:center; }
 .flip-front .flip-label{ font-family:var(--font-head); font-weight:800; font-size:1.05rem; }
 .flip-front .flip-hint{ font-size:.72rem; opacity:.8; margin-top:8px; text-transform:uppercase; letter-spacing:.05em; }
-.flip-back{ background:var(--bg-subtle); color:var(--text-main); transform:rotateY(180deg); font-size:.88rem; overflow-y:auto; border:1px solid var(--border-soft); }
+/* The back face intentionally does NOT inherit .flip-face's centered-flex
+   layout: a flex column with justify-content:center clips overflowing
+   content at the TOP with no way to scroll back up to it (and can stop the
+   scroll container from engaging at all in some browsers). Block layout,
+   top-aligned, with its own contained scroll region fixes both the
+   "top of long text is cut off" and "mouse wheel scrolls the whole page
+   instead of the card" issues. */
+.flip-back{
+  display:block; justify-content:flex-start;
+  background:var(--bg-subtle); color:var(--text-main); transform:rotateY(180deg);
+  font-size:.88rem; line-height:1.5; text-align:left;
+  overflow-y:auto; overscroll-behavior:contain;
+  border:1px solid var(--border-soft);
+}
 .flip-back strong{ color:var(--c-charcoal); }
+.flip-back::-webkit-scrollbar{ width:7px; }
+.flip-back::-webkit-scrollbar-thumb{ background:var(--c-dusty-teal); border-radius:99px; }
+.flip-back::-webkit-scrollbar-track{ background:transparent; }
 .flip-card.seen .flip-front::after{ content:"✓ viewed"; position:absolute; bottom:10px; right:12px; font-size:.65rem; background:rgba(255,255,255,.25); padding:2px 7px; border-radius:99px; }
 .flip-card.seen .flip-front{ position:relative; }
 

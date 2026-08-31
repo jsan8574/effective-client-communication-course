@@ -18,23 +18,11 @@
     ctx.fillStyle = PALETTE.white;
     ctx.fillRect(0,0,W,H);
 
-    // corner gradient panels
+    // gradient used for accent strokes/text below (corner panels removed per feedback)
     var grad = ctx.createLinearGradient(0,0,W,H);
     grad.addColorStop(0, PALETTE.primary);
     grad.addColorStop(0.5, PALETTE.tealBlue);
     grad.addColorStop(1, PALETTE.seaGreen);
-
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(0,0); ctx.lineTo(W*0.34,0); ctx.lineTo(0,H*0.42); ctx.closePath();
-    ctx.fillStyle = grad; ctx.globalAlpha = 0.9; ctx.fill();
-    ctx.restore();
-
-    ctx.save();
-    ctx.beginPath();
-    ctx.moveTo(W,H); ctx.lineTo(W-W*0.34,H); ctx.lineTo(W,H-H*0.42); ctx.closePath();
-    ctx.fillStyle = grad; ctx.globalAlpha = 0.9; ctx.fill();
-    ctx.restore();
 
     // outer border
     ctx.strokeStyle = PALETTE.charcoal;
@@ -44,16 +32,8 @@
     ctx.lineWidth = 1.5;
     ctx.strokeRect(40,40,W-80,H-80);
 
-    // badge circle
-    var cx = W/2, badgeY = 128;
-    ctx.beginPath();
-    ctx.arc(cx, badgeY, 46, 0, Math.PI*2);
-    ctx.fillStyle = grad;
-    ctx.fill();
-    ctx.fillStyle = "#fff";
-    ctx.font = "800 30px Manrope, sans-serif";
+    var cx = W/2, badgeY = 96;
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText("ECC", cx, badgeY+2);
 
     ctx.fillStyle = PALETTE.slate;
     ctx.font = "700 15px Manrope, sans-serif";

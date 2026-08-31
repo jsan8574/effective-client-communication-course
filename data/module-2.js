@@ -11,7 +11,7 @@
       { id: "im", text: "Impact: “Now I have better energy throughout the day.”", order: 4 },
     ],
     coachingPoints: [
-      "The same shape works for status updates: name the problem plainly, show the insight that explains it, state the action already taken, then land on the impact the client will actually feel.",
+      "{name}, the same shape works for status updates: name the problem plainly, show the insight that explains it, state the action already taken, then land on the impact the client will actually feel.",
       "Skipping straight to Action without naming the Insight is the most common version of this mistake — it reads as a fix with no diagnosis behind it, which erodes confidence rather than building it."
     ]
   };
@@ -43,13 +43,13 @@
     ],
     coachingPoints: [
       "WIIFM (“What's In It For Me?”) reminds us that people support what benefits them. Clear expectations aren't a compliance exercise — they create real value for leaders and clients alike.",
-      "If a client is anxious, frustrated, or escalating, the root cause is very often unclear expectations, not the underlying work itself. Unclear expectations create confusion; clear expectations create confidence."
+      "Keep this one handy, {name}: if a client is anxious, frustrated, or escalating, the root cause is very often unclear expectations, not the underlying work itself. Unclear expectations create confusion; clear expectations create confidence."
     ]
   };
 
   window.MODULE_DATA.deliverDataSim = {
     moduleId: "m2", activityId: "deliverDataSim",
-    instructions: "You're delivering a 60–90 second live update on this Week 4 status. Clients want three things from every update: Performance, Risk, and Action. Choose the strongest line at each stage of the call.",
+    instructions: "You're delivering a 60–90 second live update on this Week 4 status, {name}. Clients want three things from every update: Performance, Risk, and Action. Choose the strongest line at each stage of the call.",
     scenario: "Week 4 Project Status: Tasks Completed 28/25 (above target) · Open Issues 12 (target ≤10) · Testing 95% (target 100%) · Bugs Fixed 18/15 (above target) · Deployment: Delayed.",
     steps: [
       {
@@ -73,7 +73,7 @@
         prompt: "Client: “Okay — what should I take away from this call?”",
         choices: [
           { text: "“I guess we'll see how next week goes.”", correct: false, feedback: "Vague and non-committal — it leaves the client anchored on uncertainty instead of progress. Try again." },
-          { text: "“The key takeaway is that delivery momentum remains strong, with tasks and bug resolution exceeding target. The remaining focus is final validation and documentation, already being addressed through daily alignment sessions.”", correct: true, feedback: "Framing + Anchoring: frame the overall message, then anchor on progress already made — exactly how to close a status call." }
+          { text: "“The key takeaway is that delivery momentum remains strong, with tasks and bug resolution exceeding target. The remaining focus is final validation and documentation, already being addressed through daily alignment sessions.”", correct: true, feedback: "That's a strong close, {name} — Framing + Anchoring: frame the overall message, then anchor on progress already made." }
         ]
       }
     ],

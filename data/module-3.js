@@ -19,7 +19,7 @@
       }
     ],
     coachingPoints: [
-      "Most managers only prepare for the “What Happened?” conversation — the facts. But the Feelings and Identity conversations are usually what's actually driving the tension.",
+      "Here's the thing most managers miss, {name}: they only prepare for the “What Happened?” conversation — the facts. But the Feelings and Identity conversations are usually what's actually driving the tension.",
       "You can't skip straight to solutions when the unspoken conversation is about identity (“are we even good at this?”). Acknowledge that layer first, or your facts won't land."
     ]
   };
@@ -47,7 +47,7 @@
     coachingPoints: [
       "SLA/delay conversations need you to address the issue without creating blame or defensiveness.",
       "Scope creep conversations are really about expectation management, alignment, and collaborative problem-solving — not saying “no.”",
-      "Misalignment conversations need shared understanding rebuilt first; jumping to “whose fault is it” only deepens the misalignment."
+      "Misalignment conversations need shared understanding rebuilt first, {name}; jumping to “whose fault is it” only deepens the misalignment."
     ]
   };
 
@@ -68,7 +68,7 @@
 
   window.MODULE_DATA.aeofSim = {
     moduleId: "m3", activityId: "aeofSim",
-    instructions: "Live roleplay from the workshop: a client escalates over repeated data issues. Use A-E-O-F in real time — pick the response that matches the current stage.",
+    instructions: "Live roleplay from the workshop, {name}: a client escalates over repeated data issues. Use A-E-O-F in real time — pick the response that matches the current stage.",
     scenario: "This is the second month in a row your data delivery has had errors. The client opens the call visibly frustrated.",
     steps: [
       {
@@ -100,7 +100,7 @@
         prompt: "Client: “Okay. I'll wait and see.” — Stage: Follow-Up",
         choices: [
           { text: "“Great, talk soon!”", correct: false, feedback: "This doesn't confirm resolution or satisfaction — it just ends the call. Try again." },
-          { text: "“I'll send you the first automated report by Friday so you can confirm the fix firsthand — does that work for you?”", correct: true, feedback: "Specific, verifiable, and invites confirmation. That's Follow-Up — the stage that actually rebuilds trust." }
+          { text: "“I'll send you the first automated report by Friday so you can confirm the fix firsthand — does that work for you?”", correct: true, feedback: "That's the full framework landed, {name}. Specific, verifiable, and invites confirmation — Follow-Up is the stage that actually rebuilds trust." }
         ]
       }
     ],

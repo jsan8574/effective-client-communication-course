@@ -39,7 +39,8 @@ js/storage.js           single localStorage blob: progress, quiz answers, reflec
 js/timer.js             robust elapsed-time tracking (ignores backgrounded-tab gaps)
 js/activities.js        renderers: flip cards, matching, drag-drop sort, sequence, branching sim
 js/quiz.js              CFU + knowledge-check quiz renderer/scorer
-js/nav.js               shared header + module prev/next footer
+js/nav.js               shared header, module prev/next footer, first-visit name-gate modal
+js/personalize.js       {name} token substitution used to personalize coaching text
 js/certificate.js       canvas certificate drawing
 js/pdf-export.js        jsPDF-based "download my answers" compiler
 data/module-N.js         content + activity data for each module
@@ -49,13 +50,13 @@ data/knowledge-check.js  final assessment question bank
 ## Cache-busting
 
 Every CSS/JS `<script>`/`<link>` tag is loaded with a `?v=N` query string
-(currently `?v=2`). **Bump this number on every future edit to `css/styles.css`
+(currently `?v=5`). **Bump this number on every future edit to `css/styles.css`
 or any file in `js/`**, across every HTML file that references it — otherwise
 returning learners' browsers may keep serving a cached, stale copy. A quick way
 to do this repo-wide:
 
 ```
-sed -i 's/?v=2/?v=3/g' *.html
+sed -i 's/?v=5/?v=6/g' *.html
 ```
 
 (bump the numbers to whatever the next version should be).
@@ -94,7 +95,24 @@ unlabeled Mar 11 version (adopted those labels, used in Module 5).
 Media: no stock photography — all visuals are CSS/inline-SVG in the brand
 palette. Exception: Module 4 embeds the real YouTube source supplied for the
 workshop's "Let's watch this!" clip (a Pursuit of Happyness scene used to
-teach the SPARK model), with an "I'm in the office / can't watch right now"
-opt-out that swaps in the deck's written debrief notes instead (choice is
-saved so a returning learner keeps their preference). The deck's other,
-sourceless "Video Time" slide became a text-based discussion prompt.
+teach the SPARK model), tracked via the YouTube IFrame API so the rest of the
+module stays locked (dimmed, non-interactive) until the learner has actually
+watched it (~90% of its runtime), told us they can't watch right now (a
+"Can't watch the video right now?" disclosure, deliberately tucked away
+rather than placed next to the player, reveals the opt-out + the deck's
+written debrief notes instead), or confirms they watched it on YouTube
+directly via the automatic embed-failure fallback described below. All three
+choices persist, so a returning learner doesn't get re-gated. The deck's
+other, sourceless "Video Time" slide became a text-based discussion prompt.
+
+**Note on opening this course via `file://`:** a YouTube embed will show
+"Video player configuration error — Error 153" when the page is opened
+directly from disk (double-clicked, or `file:///path/to/module-4.html`)
+rather than served over `http(s)://` — YouTube's player requires a normal
+page referrer to authorize embedded playback, and `file://` pages don't send
+one. This is a YouTube-side restriction, not a bug in the course; it resolves
+on its own once the course is served over HTTP (`python3 -m http.server`,
+GitHub Pages, any real web host). Module 4 detects this automatically (an
+`onError`/timeout check) and swaps in a "watch it on YouTube directly, then
+check this box to continue" fallback so a learner testing locally via
+`file://` is never stuck.

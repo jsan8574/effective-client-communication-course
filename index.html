@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=2">
+<link rel="stylesheet" href="css/styles.css?v=5">
 </head>
 <body>
 <header class="site-header" id="site-header"></header>
@@ -17,6 +17,7 @@
   <div class="container">
     <span class="hero-badge">Self-Paced · 5 Modules · ~2 hrs</span>
     <h1>Effective Client Communication Strategies</h1>
+    <p id="hero-welcome" style="display:none;"></p>
     <p>Learn how top-performing team leaders manage perception, trust, and conflict through intentional communication — reframing routine updates into strategic, confidence-building conversations.</p>
     <div class="btn-row">
       <a href="module-1.html" class="btn" style="background:#fff;color:var(--c-primary);">Start Module 1</a>
@@ -54,10 +55,11 @@
 
 <div class="footer-note">Effective Client Communication Strategies · Self-paced edition · Built for personal and team use</div>
 
-<script src="js/course-config.js?v=2"></script>
-<script src="js/storage.js?v=2"></script>
-<script src="js/timer.js?v=2"></script>
-<script src="js/nav.js?v=2"></script>
+<script src="js/course-config.js?v=5"></script>
+<script src="js/storage.js?v=5"></script>
+<script src="js/timer.js?v=5"></script>
+<script src="js/personalize.js?v=5"></script>
+<script src="js/nav.js?v=5"></script>
 <script>
   (function(){
     var grid = document.getElementById("module-grid");
@@ -77,6 +79,23 @@
       grid.appendChild(a);
     });
     NAV.init();
+
+    var welcome = document.getElementById("hero-welcome");
+    function refreshWelcome(){
+      var firstName = Personalize.firstName();
+      if (firstName){
+        var pct = Storage.courseProgressPct();
+        welcome.textContent = pct > 0
+          ? "Welcome back, " + firstName + " — pick up right where you left off."
+          : "Welcome, " + firstName + " — glad to have you here.";
+        welcome.style.display = "block";
+      } else {
+        welcome.style.display = "none";
+      }
+    }
+    refreshWelcome();
+    // the name gate (nav.js) can save a name after this script already ran once
+    document.addEventListener("ecc:name-set", refreshWelcome);
   })();
 </script>
 </body>

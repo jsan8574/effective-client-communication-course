@@ -7,10 +7,24 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=2">
+<link rel="stylesheet" href="css/styles.css?v=5">
 <style>
   .video-embed{ position:relative; width:100%; padding-top:56.25%; border-radius:var(--radius-md); overflow:hidden; background:#000; box-shadow:var(--shadow-md); }
   .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+  .video-progress-bar{ height:6px; border-radius:99px; background:var(--border-soft); overflow:hidden; margin-top:12px; }
+  .video-progress-bar > span{ display:block; height:100%; width:0%; background:linear-gradient(90deg,var(--c-teal-blue),var(--c-sea-green)); transition:width .4s ease; }
+  .video-progress-label{ font-size:.78rem; color:var(--text-muted); margin-top:6px; }
+  .link-btn{
+    background:none; border:0; padding:0; font:inherit; font-size:.82rem; color:var(--text-muted);
+    text-decoration:underline; text-underline-offset:2px; cursor:pointer;
+  }
+  .link-btn:hover{ color:var(--c-primary); }
+  #cant-watch-panel{ margin-top:10px; }
+  /* The rest of the module stays visible (so a returning learner can see what's
+     ahead) but is inert and dimmed until the video is watched, opted out of, or
+     acknowledged as watched elsewhere — this is what makes the video an actual
+     requirement rather than something easy to scroll straight past. */
+  .locked{ opacity:.4; filter:grayscale(.25); pointer-events:none; user-select:none; position:relative; }
 </style>
 </head>
 <body>
@@ -40,27 +54,51 @@
 
       <div id="video-block">
         <div class="video-embed">
-          <iframe src="https://www.youtube.com/embed/UUDKEbX5OQw" title="Pursuit of Happyness — interview scene" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          <div id="yt-player"></div>
+        </div>
+        <div id="video-progress-wrap">
+          <div class="video-progress-bar"><span id="video-progress-fill"></span></div>
+          <div class="video-progress-label" id="video-progress-label">Loading video…</div>
         </div>
       </div>
 
-      <label class="opt-out">
-        <input type="checkbox" id="video-optout">
-        I'm in the office right now and can't watch the video — show me the written debrief instead
-      </label>
+      <div id="video-embed-fallback" class="callout" style="display:none;">
+        <p style="margin:0 0 10px;"><strong>The embedded player isn't loading here.</strong> This usually happens when the course is opened straight from a downloaded file instead of a live web address (it resolves once this course is hosted online). You can still watch it directly:</p>
+        <p style="margin:0 0 10px;"><a href="https://www.youtube.com/watch?v=UUDKEbX5OQw" target="_blank" rel="noopener">Open the video on YouTube →</a></p>
+        <label class="opt-out" style="margin-top:4px;">
+          <input type="checkbox" id="video-watched-elsewhere">
+          I watched it on YouTube — let me continue
+        </label>
+      </div>
 
-      <div id="video-debrief" class="card" style="margin-top:14px;display:none;">
-        <h3>Written Debrief: What the Scene Shows</h3>
-        <p style="font-size:.9rem;color:var(--text-muted);">Chris Gardner arrives at a job interview in a disheveled state after a rough day — but stays honest about his situation instead of hiding it, and the interview turns in his favor. Here's what each moment maps to in the SPARK model:</p>
-        <ul style="font-size:.88rem;color:var(--text-main);padding-left:20px;">
-          <li style="margin-bottom:8px;"><strong>Straightforwardness (Authenticity):</strong> Gardner's honesty about his situation, despite his appearance, builds trust with the interviewers.</li>
-          <li style="margin-bottom:8px;"><strong>Preparedness (Preparation):</strong> His knowledge and understanding of the job shine through even though he wasn't dressed for the occasion.</li>
-          <li style="margin-bottom:8px;"><strong>Adaptability:</strong> He quickly adapts to the unexpected situation of arriving disheveled, thinking on his feet.</li>
-          <li style="margin-bottom:8px;"><strong>Resilience (Confidence):</strong> Despite his appearance, he confidently answers questions and demonstrates competence.</li>
-          <li><strong>Kindheartedness (Positivity):</strong> He maintains a positive attitude throughout, leaving a lasting impression.</li>
-        </ul>
+      <p style="margin-top:16px;">
+        <button type="button" id="cant-watch-toggle" class="link-btn">Can't watch the video right now?</button>
+      </p>
+      <div id="cant-watch-panel" style="display:none;">
+        <label class="opt-out">
+          <input type="checkbox" id="video-optout">
+          I'm in the office right now and can't watch the video — I've read the written debrief below instead
+        </label>
+
+        <div id="video-debrief" class="card" style="margin-top:14px;display:none;">
+          <h3>Written Debrief: What the Scene Shows</h3>
+          <p style="font-size:.9rem;color:var(--text-muted);">Chris Gardner arrives at a job interview in a disheveled state after a rough day — but stays honest about his situation instead of hiding it, and the interview turns in his favor. Here's what each moment maps to in the SPARK model:</p>
+          <ul style="font-size:.88rem;color:var(--text-main);padding-left:20px;">
+            <li style="margin-bottom:8px;"><strong>Straightforwardness (Authenticity):</strong> Gardner's honesty about his situation, despite his appearance, builds trust with the interviewers.</li>
+            <li style="margin-bottom:8px;"><strong>Preparedness (Preparation):</strong> His knowledge and understanding of the job shine through even though he wasn't dressed for the occasion.</li>
+            <li style="margin-bottom:8px;"><strong>Adaptability:</strong> He quickly adapts to the unexpected situation of arriving disheveled, thinking on his feet.</li>
+            <li style="margin-bottom:8px;"><strong>Resilience (Confidence):</strong> Despite his appearance, he confidently answers questions and demonstrates competence.</li>
+            <li><strong>Kindheartedness (Positivity):</strong> He maintains a positive attitude throughout, leaving a lasting impression.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div id="module-lock-banner" class="callout" style="display:none;">
+        🔒 The rest of this module unlocks once you've watched the video above (or let us know you're unable to right now).
       </div>
     </div>
+
+    <div id="module-body-gated" class="locked">
 
     <div class="section" id="spark">
       <span class="section-label">Framework</span>
@@ -98,36 +136,188 @@
       <div class="activity" id="quiz-m4cfu"></div>
     </div>
 
+    </div><!-- /#module-body-gated -->
+
     <div class="module-footer" id="module-footer"></div>
   </div>
 </main>
 
-<script src="js/course-config.js?v=2"></script>
-<script src="js/storage.js?v=2"></script>
-<script src="js/timer.js?v=2"></script>
-<script src="js/activities.js?v=2"></script>
-<script src="js/quiz.js?v=2"></script>
-<script src="js/nav.js?v=2"></script>
-<script src="data/module-4.js?v=2"></script>
+<script src="js/course-config.js?v=5"></script>
+<script src="js/storage.js?v=5"></script>
+<script src="js/timer.js?v=5"></script>
+<script src="js/personalize.js?v=5"></script>
+<script src="js/activities.js?v=5"></script>
+<script src="js/quiz.js?v=5"></script>
+<script src="js/nav.js?v=5"></script>
+<script src="data/module-4.js?v=5"></script>
 <script>
   (function(){
-    // video opt-out toggle (persisted)
-    var vState = Storage.getActivityState("m4","sparkVideo") || { optOut:false, complete:true };
-    var cb = document.getElementById("video-optout");
-    var videoBlock = document.getElementById("video-block");
-    var debrief = document.getElementById("video-debrief");
-    function applyVideoState(){
-      videoBlock.style.display = vState.optOut ? "none" : "block";
-      debrief.style.display = vState.optOut ? "block" : "none";
-      cb.checked = vState.optOut;
+    /* ---------------------------------------------------------
+       "Let's Watch This" gate. The rest of Module 4 stays behind
+       #module-body-gated (.locked = dimmed + inert) until one of:
+         - the video is actually watched (tracked via the YouTube
+           IFrame API, to ~90% of its runtime — a proxy for
+           "watched", not a hard anti-cheat measure, consistent
+           with the honor-system design used everywhere else in
+           this course)
+         - the embedded player itself fails to load (shows a
+           YouTube-on-its-own-page fallback + a self-report
+           checkbox), or
+         - the learner tells us they can't watch right now (e.g.
+           in a shared office) — kept available, but tucked behind
+           a small "Can't watch the video right now?" disclosure
+           rather than sitting next to the player as an easy-to-
+           reach-for skip button.
+       Progress (watched seconds, which path was used) is saved
+       incrementally so a mid-video refresh doesn't lose it.
+    --------------------------------------------------------- */
+    var vState = Storage.getActivityState("m4","sparkVideo") ||
+      { optOut:false, watchedElsewhere:false, watchedSec:0, duration:0, watched:false, complete:false };
+
+    var lockedContent   = document.getElementById("module-body-gated");
+    var lockBanner      = document.getElementById("module-lock-banner");
+    var progressWrap    = document.getElementById("video-progress-wrap");
+    var progressFill    = document.getElementById("video-progress-fill");
+    var progressLabel   = document.getElementById("video-progress-label");
+    var fallbackPanel   = document.getElementById("video-embed-fallback");
+    var elsewhereCb     = document.getElementById("video-watched-elsewhere");
+    var cantWatchToggle = document.getElementById("cant-watch-toggle");
+    var cantWatchPanel  = document.getElementById("cant-watch-panel");
+    var cb              = document.getElementById("video-optout");
+    var debrief         = document.getElementById("video-debrief");
+
+    function isUnlocked(){ return vState.watched || vState.optOut || vState.watchedElsewhere; }
+
+    function applyLockState(){
+      if (isUnlocked()){
+        lockedContent.classList.remove("locked");
+        lockBanner.style.display = "none";
+      } else {
+        lockedContent.classList.add("locked");
+        lockBanner.style.display = "block";
+      }
     }
+
+    function updateProgressUI(){
+      var pct = vState.duration ? Math.max(0, Math.min(100, Math.round((vState.watchedSec / vState.duration) * 100))) : 0;
+      progressFill.style.width = pct + "%";
+      progressLabel.textContent = vState.watched
+        ? "Video watched — thanks! The rest of the module is unlocked below."
+        : (pct + "% watched — keep watching to unlock the rest of the module.");
+    }
+
+    function persist(){ Storage.saveActivityState("m4","sparkVideo", vState); }
+
+    function markWatched(){
+      if (vState.watched) return;
+      vState.watched = true;
+      vState.complete = true;
+      persist();
+      updateProgressUI();
+      applyLockState();
+    }
+
+    // low-emphasis "can't watch" disclosure — collapsed by default so it
+    // isn't the first, easiest thing a learner reaches for.
+    cantWatchToggle.addEventListener("click", function(){
+      var showing = cantWatchPanel.style.display !== "none";
+      cantWatchPanel.style.display = showing ? "none" : "block";
+    });
     cb.addEventListener("change", function(){
       vState.optOut = cb.checked;
       vState.complete = true;
-      Storage.saveActivityState("m4","sparkVideo", vState);
-      applyVideoState();
+      debrief.style.display = cb.checked ? "block" : "none";
+      persist();
+      applyLockState();
     });
-    applyVideoState();
+    cb.checked = vState.optOut;
+    debrief.style.display = vState.optOut ? "block" : "none";
+    if (vState.optOut) cantWatchPanel.style.display = "block";
+
+    // fallback path for when the embedded player itself won't load
+    elsewhereCb.addEventListener("change", function(){
+      vState.watchedElsewhere = elsewhereCb.checked;
+      vState.complete = vState.watchedElsewhere || vState.optOut;
+      persist();
+      applyLockState();
+    });
+    elsewhereCb.checked = vState.watchedElsewhere;
+
+    function showEmbedFallback(){
+      if (fallbackPanel.style.display === "block") return; // already shown
+      fallbackPanel.style.display = "block";
+      progressWrap.style.display = "none";
+      // whatever the (possibly broken-looking) player rendered up to this point,
+      // replace it with one plain message so the learner isn't staring at a raw
+      // YouTube error graphic above our own explanation of what to do about it.
+      var embedBox = document.querySelector("#video-block .video-embed");
+      if (embedBox){
+        embedBox.innerHTML = '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-head);font-weight:700;text-align:center;padding:20px;">▶ See below to continue</div>';
+      }
+    }
+
+    updateProgressUI();
+    applyLockState();
+
+    // ---- YouTube IFrame API wiring ----
+    var ytPlayer = null, pollTimer = null, playerReady = false;
+
+    window.onYouTubeIframeAPIReady = function(){
+      ytPlayer = new YT.Player("yt-player", {
+        videoId: "UUDKEbX5OQw",
+        playerVars: { rel: 0 },
+        events: {
+          onReady: function(e){
+            playerReady = true;
+            var dur = e.target.getDuration();
+            if (dur) vState.duration = dur;
+            // resume near where they left off rather than forcing a rewatch from zero
+            if (vState.watchedSec > 5 && !vState.watched){
+              try{ e.target.seekTo(vState.watchedSec, true); }catch(err){}
+            }
+            updateProgressUI();
+          },
+          onStateChange: function(e){
+            if (pollTimer){ clearInterval(pollTimer); pollTimer = null; }
+            if (e.data === YT.PlayerState.PLAYING){
+              pollTimer = setInterval(pollProgress, 1000);
+            } else {
+              pollProgress();
+            }
+            if (e.data === YT.PlayerState.ENDED) markWatched();
+          },
+          onError: function(){ showEmbedFallback(); }
+        }
+      });
+    };
+
+    function pollProgress(){
+      if (!ytPlayer || typeof ytPlayer.getCurrentTime !== "function") return;
+      var cur = ytPlayer.getCurrentTime();
+      var dur = ytPlayer.getDuration() || vState.duration;
+      if (dur) vState.duration = dur;
+      if (cur > vState.watchedSec) vState.watchedSec = cur; // track furthest point reached
+      persist();
+      if (dur && vState.watchedSec >= dur * 0.9){ markWatched(); return; }
+      updateProgressUI();
+    }
+
+    // If the IFrame API script never loads (no internet) or the player never
+    // calls onReady (e.g. Error 153 from a file:// origin — see README), fall
+    // back to a direct YouTube link + self-report instead of leaving the
+    // learner staring at a broken player with no way to proceed.
+    setTimeout(function(){ if (!playerReady) showEmbedFallback(); }, 8000);
+
+    if (!vState.watched){
+      var ytTag = document.createElement("script");
+      ytTag.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(ytTag);
+    } else {
+      // already watched on a prior visit — no need to reload the player at all
+      progressWrap.style.display = "none";
+      document.getElementById("yt-player").outerHTML =
+        '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-family:var(--font-head);font-weight:700;text-align:center;padding:20px;">✓ You\'ve already watched this video<br><a href="https://www.youtube.com/watch?v=UUDKEbX5OQw" target="_blank" rel="noopener" style="color:var(--c-dusty-teal,#cddbe6);font-weight:500;font-size:.85rem;margin-top:8px;display:inline-block;">Watch it again →</a></div>';
+    }
 
     Activities.flipCards(document.getElementById("act-sparkCards"), MODULE_DATA.sparkCards);
     Activities.sequence(document.getElementById("act-pyramidSeq"), MODULE_DATA.pyramidSeq);

@@ -17,7 +17,7 @@
     var pct = Storage.courseProgressPct();
     mount.innerHTML =
       '<div class="container">' +
-        '<a class="brand" href="index.html"><span class="brand-mark">ECC</span><span>' + window.COURSE.title + '</span></a>' +
+        '<a class="brand" href="index.html"><span>' + window.COURSE.title + '</span></a>' +
         '<div class="header-progress">' +
           '<span id="hdr-pct-label">' + pct + '% complete</span>' +
           '<span class="bar"><span id="hdr-pct-bar" style="width:' + pct + '%"></span></span>' +
@@ -28,6 +28,53 @@
           '<a href="' + window.COURSE.certificatePath + '">Certificate</a>' +
         '</div>' +
       '</div>';
+  }
+
+  /* ---------------------------------------------------------
+     Name gate — captured once, the first time the learner lands
+     on any page of the course, so the rest of the experience
+     (coaching points, sim feedback, the certificate) can be
+     addressed to them by name. Skippable — this is a self-paced,
+     no-login course, so nothing should truly block access.
+  --------------------------------------------------------- */
+  function maybeShowNameGate(){
+    if (Storage.getLearnerName().trim()) return; // already have it
+    try{ if (sessionStorage.getItem("ecc_name_gate_skipped") === "1") return; }catch(e){}
+
+    var overlay = el("div","name-gate-overlay");
+    overlay.innerHTML =
+      '<div class="name-gate-card">' +
+        '<div class="name-gate-badge">👋</div>' +
+        '<h2>Welcome to the course</h2>' +
+        '<p>What should we call you? We\'ll use it to personalize your coaching notes along the way — and it\'s what will appear on your certificate.</p>' +
+        '<input type="text" id="name-gate-input" placeholder="Your first name" autocomplete="given-name">' +
+        '<div class="btn-row" style="justify-content:center;">' +
+          '<button class="btn" id="name-gate-submit">Let\'s Begin</button>' +
+          '<button class="btn ghost small" id="name-gate-skip" type="button">Skip for now</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(overlay);
+
+    var input = overlay.querySelector("#name-gate-input");
+    input.focus();
+
+    function submit(){
+      var val = input.value.trim();
+      if (val){
+        Storage.setLearnerName(val);
+        // let any page listen and refresh name-dependent content immediately
+        // (e.g. index.html's personalized hero welcome line) without a reload.
+        document.dispatchEvent(new CustomEvent("ecc:name-set", { detail: { name: val } }));
+      }
+      overlay.remove();
+      renderHeader();
+    }
+    overlay.querySelector("#name-gate-submit").addEventListener("click", submit);
+    input.addEventListener("keydown", function(e){ if (e.key === "Enter") submit(); });
+    overlay.querySelector("#name-gate-skip").addEventListener("click", function(){
+      try{ sessionStorage.setItem("ecc_name_gate_skipped","1"); }catch(e){}
+      overlay.remove();
+    });
   }
 
   function renderModuleFooter(moduleId){
@@ -56,6 +103,7 @@
     init: function(moduleId){
       renderHeader();
       if (moduleId) renderModuleFooter(moduleId);
+      maybeShowNameGate();
       // progress can change as the learner interacts with activities on this
       // page, so keep the header bar live without a reload.
       setInterval(refreshHeaderProgress, 3000);

@@ -19,7 +19,7 @@
       }
     ],
     coachingPoints: [
-      "Inform, Influence, and Inspire aren't three unrelated tones — they're a ladder. A good update often climbs all three in one breath: acknowledge, show control, then anchor confidence.",
+      "{name}, Inform, Influence, and Inspire aren't three unrelated tones — they're a ladder. A good update often climbs all three in one breath: acknowledge, show control, then anchor confidence.",
       "Notice none of the three examples hide the problem. Transparency is the floor, not something Inspire-level language replaces."
     ]
   };
@@ -35,13 +35,13 @@
     ],
     coachingPoints: [
       "Sensitivity — not urgency — is usually what should push you toward a live conversation. A highly sensitive, low-urgency issue (e.g. a quiet scope disagreement) often deserves a call more than a fast-but-impersonal chat message.",
-      "Defaulting everything to email or chat because it's fastest for you, not the client, is the single most common channel-choice mistake."
+      "Defaulting everything to email or chat because it's fastest for you, not the client, is the single most common channel-choice mistake, {name}."
     ]
   };
 
   window.MODULE_DATA.defensiveSim = {
     moduleId: "m1", activityId: "defensiveSim",
-    instructions: "This scenario is built from a live facilitator role-play: Round 1 used only “Yes, but…” language so the group could hear how defensive it sounds; Round 2 replaced it with acknowledgment language. Play both rounds below — pick the response that isn't defensive.",
+    instructions: "This scenario is built from a live facilitator role-play: Round 1 used only “Yes, but…” language so the group could hear how defensive it sounds; Round 2 replaced it with acknowledgment language. Play both rounds below, {name} — pick the response that isn't defensive.",
     scenario: "You're on a call with a client who has just raised the same delivery issue for the third time.",
     steps: [
       {
@@ -65,12 +65,12 @@
         prompt: "Client: “Alright... I need to see this doesn't happen a fourth time.”",
         choices: [
           { text: "“It won't — don't worry about it.”", correct: false, feedback: "This over-promises with no substance behind it, and dismisses a legitimate worry instead of closing the loop. Try again." },
-          { text: "“I'll send you a short confirmation after Friday's checkpoint so you can see it firsthand.”", correct: true, feedback: "A specific, verifiable follow-up. This is the “Follow-Up” habit that turns a one-time save into rebuilt trust." }
+          { text: "“I'll send you a short confirmation after Friday's checkpoint so you can see it firsthand.”", correct: true, feedback: "Nicely done, {name} — a specific, verifiable follow-up. This is the “Follow-Up” habit that turns a one-time save into rebuilt trust." }
         ]
       }
     ],
     coachingPoints: [
-      "“Yes, but…” is defensive no matter how true the “but” is — it tells the client you're managing your own position, not theirs.",
+      "{name}, “Yes, but…” is defensive no matter how true the “but” is — it tells the client you're managing your own position, not theirs.",
       "Facilitator tips for these conversations: avoid filler words, pause 1–2 seconds before responding, don't over-explain, avoid blaming language (“we experienced a delay” instead of “the team missed it”), and slow your pace slightly.",
       "How you say something matters — but so does where. The channel you choose (Module 1's other activity) shapes how much of this language even lands."
     ]

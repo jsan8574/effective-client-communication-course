@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=2">
+<link rel="stylesheet" href="css/styles.css?v=5">
 <style>
   #cert-canvas{ width:100%; max-width:900px; height:auto; border-radius:var(--radius-md); box-shadow:var(--shadow-lg); display:block; margin:0 auto; border:1px solid var(--border-soft); }
   .stat-row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin:20px 0; }
@@ -40,7 +40,7 @@
 
         <div id="kc-warning" class="callout" style="display:none;">You haven't completed the Final Knowledge Check yet — your certificate will show a score once you do. <a href="knowledge-check.html">Take it now →</a></div>
 
-        <canvas id="cert-canvas" width="1200" height="850"></canvas>
+        <canvas id="cert-canvas" width="1200" height="760"></canvas>
 
         <div class="btn-row" style="justify-content:center;">
           <button class="btn" id="download-png">Download Certificate (PNG)</button>
@@ -57,12 +57,13 @@
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="js/course-config.js?v=2"></script>
-<script src="js/storage.js?v=2"></script>
-<script src="js/timer.js?v=2"></script>
-<script src="js/nav.js?v=2"></script>
-<script src="js/certificate.js?v=2"></script>
-<script src="js/pdf-export.js?v=2"></script>
+<script src="js/course-config.js?v=5"></script>
+<script src="js/storage.js?v=5"></script>
+<script src="js/timer.js?v=5"></script>
+<script src="js/personalize.js?v=5"></script>
+<script src="js/nav.js?v=5"></script>
+<script src="js/certificate.js?v=5"></script>
+<script src="js/pdf-export.js?v=5"></script>
 <script>
   (function(){
     var nameInput = document.getElementById("learner-name");

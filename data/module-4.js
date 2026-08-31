@@ -12,7 +12,7 @@
       { label: "K — Kindheartedness", back: "<strong>Positivity.</strong> A genuinely positive, engaging attitude leaves a lasting impression and makes it easier for the other person to connect with you." }
     ],
     coachingPoints: [
-      "SPARK isn't about hiding a bad situation — it's about how you show up inside it. Every trait here is about behavior under pressure, not about avoiding pressure.",
+      "SPARK isn't about hiding a bad situation, {name} — it's about how you show up inside it. Every trait here is about behavior under pressure, not about avoiding pressure.",
       "Notice that “Straightforwardness” comes first. Every other trait in SPARK only builds trust if the client already believes you're being honest with them."
     ]
   };
@@ -27,7 +27,7 @@
     ],
     coachingPoints: [
       "The Pyramid Principle and BLUF (Module 2) are the same instinct applied at different scales: lead with the conclusion, then let the structure — not the audience — do the work of finding supporting detail.",
-      "Executives skim from the top down. If your conclusion is buried under Level 2 and Level 3 detail, most of your audience never reaches it."
+      "Executives skim from the top down, {name}. If your conclusion is buried under Level 2 and Level 3 detail, most of your audience never reaches it."
     ]
   };
 
@@ -57,7 +57,7 @@
         prompt: "How do you report back to the client?",
         choices: [
           { text: "“Don't worry, it'll all get done.”", correct: false, feedback: "Same over-promise as step one, just later in the conversation. It sets up a broken commitment the moment reality doesn't cooperate. Try again." },
-          { text: "“Here's what's realistic today: with additional support, we'll prioritize the claims closest to filing risk first, and give you a clear count of completed vs. in-progress by end of day.”", correct: true, feedback: "Specific, honest, and gives the client something concrete to plan around — proactive reporting under pressure." }
+          { text: "“Here's what's realistic today: with additional support, we'll prioritize the claims closest to filing risk first, and give you a clear count of completed vs. in-progress by end of day.”", correct: true, feedback: "That's the whole sequence handled well, {name} — specific, honest, and it gives the client something concrete to plan around." }
         ]
       }
     ],
