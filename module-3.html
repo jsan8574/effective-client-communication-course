@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 3: Navigating Conflict & Difficult Conversations — ECC Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=2">
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="container">
+
+    <div class="section">
+      <span class="section-label">Module 3 of 5</span>
+      <h1>Navigating Conflict & Difficult Conversations</h1>
+      <p class="lead" style="color:var(--text-muted);">Most leaders see conflict as something to avoid. Strong leaders see it as something to use.</p>
+      <div class="toc">
+        <a href="#reframe">Reframing Conflict</a>
+        <a href="#types">3 Types of Difficult Conversations</a>
+        <a href="#situations">Classify the Situation</a>
+        <a href="#aeof">The A-E-O-F Framework</a>
+        <a href="#roleplay">Live Roleplay</a>
+        <a href="#cfu">Check for Understanding</a>
+      </div>
+    </div>
+
+    <div class="section" id="reframe">
+      <span class="section-label">Mindset Shift</span>
+      <h2>Conflict Is Not the Problem</h2>
+      <p>Conflict usually means: people care, there are different perspectives, and something important is at stake. From organizational behavior: <strong>healthy conflict</strong> is task conflict (ideas, approaches); <strong>unhealthy conflict</strong> is relationship conflict (ego, personal attacks). Your goal is to encourage task conflict and prevent relationship conflict.</p>
+      <div class="callout quote">“You're not avoiding conflict — you're postponing it at a higher cost.”</div>
+    </div>
+
+    <div class="section" id="types">
+      <span class="section-label">Framework</span>
+      <h2>3 Types of Difficult Conversations</h2>
+      <div class="activity" id="act-convoTypes"></div>
+    </div>
+
+    <div class="section" id="situations">
+      <span class="section-label">Classify</span>
+      <h2>What Kind of Situation Is This?</h2>
+      <div class="activity" id="act-situationSort"></div>
+    </div>
+
+    <div class="section" id="aeof">
+      <span class="section-label">Framework</span>
+      <h2>The A-E-O-F Framework</h2>
+      <p>Acknowledge → Explain → Offer → Follow-Up. Works in both verbal and written communication.</p>
+      <div class="activity" id="act-aeofSeq"></div>
+    </div>
+
+    <div class="section" id="roleplay">
+      <span class="section-label">Applied Scenario</span>
+      <h2>Live Roleplay: Client Escalation</h2>
+      <div class="activity" id="act-aeofSim"></div>
+    </div>
+
+    <div class="section" id="cfu">
+      <span class="section-label">Check for Understanding</span>
+      <h2>Quick Knowledge Check</h2>
+      <div class="activity" id="quiz-m3cfu"></div>
+    </div>
+
+    <div class="module-footer" id="module-footer"></div>
+  </div>
+</main>
+
+<script src="js/course-config.js?v=2"></script>
+<script src="js/storage.js?v=2"></script>
+<script src="js/timer.js?v=2"></script>
+<script src="js/activities.js?v=2"></script>
+<script src="js/quiz.js?v=2"></script>
+<script src="js/nav.js?v=2"></script>
+<script src="data/module-3.js?v=2"></script>
+<script>
+  (function(){
+    Activities.flipCards(document.getElementById("act-convoTypes"), MODULE_DATA.convoTypes);
+    Activities.bucketSort(document.getElementById("act-situationSort"), MODULE_DATA.situationSort);
+    Activities.sequence(document.getElementById("act-aeofSeq"), MODULE_DATA.aeofSeq);
+    Activities.branchingSim(document.getElementById("act-aeofSim"), MODULE_DATA.aeofSim);
+
+    renderQuiz(
+      document.getElementById("quiz-m3cfu"),
+      MODULE_DATA.m3cfu,
+      function(){ return Storage.getCfu("m3"); },
+      function(state){ Storage.saveCfu("m3", state); },
+      { onComplete: function(){ NAV.refreshHeaderProgress(); } }
+    );
+
+    NAV.init("m3");
+  })();
+</script>
+</body>
+</html>

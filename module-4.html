@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 4: Executive Presence & Influence — ECC Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=2">
+<style>
+  .video-embed{ position:relative; width:100%; padding-top:56.25%; border-radius:var(--radius-md); overflow:hidden; background:#000; box-shadow:var(--shadow-md); }
+  .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
+</style>
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="container">
+
+    <div class="section">
+      <span class="section-label">Module 4 of 5</span>
+      <h1>Executive Presence & Influence</h1>
+      <p class="lead" style="color:var(--text-muted);">Skills get you results. Presence earns you trust.</p>
+      <div class="toc">
+        <a href="#video">Watch: SPARK in Action</a>
+        <a href="#spark">The SPARK Model</a>
+        <a href="#pyramid">The Pyramid Principle</a>
+        <a href="#questions">Powerful Questions</a>
+        <a href="#roleplay">What Would You Do?</a>
+        <a href="#cfu">Check for Understanding</a>
+      </div>
+    </div>
+
+    <div class="section" id="video">
+      <span class="section-label">Watch First</span>
+      <h2>Let's Watch This</h2>
+      <p>A short interview scene from <em>The Pursuit of Happyness</em> demonstrates every trait in the SPARK model below.</p>
+
+      <div id="video-block">
+        <div class="video-embed">
+          <iframe src="https://www.youtube.com/embed/UUDKEbX5OQw" title="Pursuit of Happyness — interview scene" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+
+      <label class="opt-out">
+        <input type="checkbox" id="video-optout">
+        I'm in the office right now and can't watch the video — show me the written debrief instead
+      </label>
+
+      <div id="video-debrief" class="card" style="margin-top:14px;display:none;">
+        <h3>Written Debrief: What the Scene Shows</h3>
+        <p style="font-size:.9rem;color:var(--text-muted);">Chris Gardner arrives at a job interview in a disheveled state after a rough day — but stays honest about his situation instead of hiding it, and the interview turns in his favor. Here's what each moment maps to in the SPARK model:</p>
+        <ul style="font-size:.88rem;color:var(--text-main);padding-left:20px;">
+          <li style="margin-bottom:8px;"><strong>Straightforwardness (Authenticity):</strong> Gardner's honesty about his situation, despite his appearance, builds trust with the interviewers.</li>
+          <li style="margin-bottom:8px;"><strong>Preparedness (Preparation):</strong> His knowledge and understanding of the job shine through even though he wasn't dressed for the occasion.</li>
+          <li style="margin-bottom:8px;"><strong>Adaptability:</strong> He quickly adapts to the unexpected situation of arriving disheveled, thinking on his feet.</li>
+          <li style="margin-bottom:8px;"><strong>Resilience (Confidence):</strong> Despite his appearance, he confidently answers questions and demonstrates competence.</li>
+          <li><strong>Kindheartedness (Positivity):</strong> He maintains a positive attitude throughout, leaving a lasting impression.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section" id="spark">
+      <span class="section-label">Framework</span>
+      <h2>The SPARK Model</h2>
+      <div class="activity" id="act-sparkCards"></div>
+    </div>
+
+    <div class="section" id="pyramid">
+      <span class="section-label">Framework</span>
+      <h2>The Pyramid Principle</h2>
+      <p>Speak with structure — 3-point logic, top-down. Clarity, efficiency, and persuasiveness all come from leading with the conclusion.</p>
+      <div class="activity" id="act-pyramidSeq"></div>
+    </div>
+
+    <div class="section" id="questions">
+      <span class="section-label">Tool</span>
+      <h2>Ask Powerful Questions</h2>
+      <p>Shift from “doing for the client” to “consulting the client.” A few questions that do this well:</p>
+      <div class="chip-list">
+        <span class="chip">“What's the biggest risk you see in this approach?”</span>
+        <span class="chip">“How does this align with your priorities?”</span>
+      </div>
+      <p style="font-size:.9rem;color:var(--text-muted);">Confident body language on video calls reinforces the same message: you're a partner in the conversation, not just an executor of tasks.</p>
+    </div>
+
+    <div class="section" id="roleplay">
+      <span class="section-label">Applied Scenario</span>
+      <h2>What Would You Do?</h2>
+      <div class="activity" id="act-billingSim"></div>
+    </div>
+
+    <div class="section" id="cfu">
+      <span class="section-label">Check for Understanding</span>
+      <h2>Quick Knowledge Check</h2>
+      <div class="activity" id="quiz-m4cfu"></div>
+    </div>
+
+    <div class="module-footer" id="module-footer"></div>
+  </div>
+</main>
+
+<script src="js/course-config.js?v=2"></script>
+<script src="js/storage.js?v=2"></script>
+<script src="js/timer.js?v=2"></script>
+<script src="js/activities.js?v=2"></script>
+<script src="js/quiz.js?v=2"></script>
+<script src="js/nav.js?v=2"></script>
+<script src="data/module-4.js?v=2"></script>
+<script>
+  (function(){
+    // video opt-out toggle (persisted)
+    var vState = Storage.getActivityState("m4","sparkVideo") || { optOut:false, complete:true };
+    var cb = document.getElementById("video-optout");
+    var videoBlock = document.getElementById("video-block");
+    var debrief = document.getElementById("video-debrief");
+    function applyVideoState(){
+      videoBlock.style.display = vState.optOut ? "none" : "block";
+      debrief.style.display = vState.optOut ? "block" : "none";
+      cb.checked = vState.optOut;
+    }
+    cb.addEventListener("change", function(){
+      vState.optOut = cb.checked;
+      vState.complete = true;
+      Storage.saveActivityState("m4","sparkVideo", vState);
+      applyVideoState();
+    });
+    applyVideoState();
+
+    Activities.flipCards(document.getElementById("act-sparkCards"), MODULE_DATA.sparkCards);
+    Activities.sequence(document.getElementById("act-pyramidSeq"), MODULE_DATA.pyramidSeq);
+    Activities.branchingSim(document.getElementById("act-billingSim"), MODULE_DATA.billingSim);
+
+    renderQuiz(
+      document.getElementById("quiz-m4cfu"),
+      MODULE_DATA.m4cfu,
+      function(){ return Storage.getCfu("m4"); },
+      function(state){ Storage.saveCfu("m4", state); },
+      { onComplete: function(){ NAV.refreshHeaderProgress(); } }
+    );
+
+    NAV.init("m4");
+  })();
+</script>
+</body>
+</html>

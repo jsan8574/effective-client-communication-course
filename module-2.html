@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 2: Strategic Communication Techniques — ECC Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=2">
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="container">
+
+    <div class="section">
+      <span class="section-label">Module 2 of 5</span>
+      <h1>Strategic Communication Techniques</h1>
+      <p class="lead" style="color:var(--text-muted);">Now that you know the three communication levels, the next question is: how do you actually structure a real conversation? These four techniques give you the words.</p>
+      <div class="toc">
+        <a href="#bluf">BLUF</a>
+        <a href="#story">Storytelling for Data</a>
+        <a href="#fae">Frame, Anchor, Explain</a>
+        <a href="#wiifm">WIIFM Benefits</a>
+        <a href="#deliver">Deliver This Data</a>
+        <a href="#cfu">Check for Understanding</a>
+      </div>
+    </div>
+
+    <div class="section" id="bluf">
+      <span class="section-label">Technique 1</span>
+      <h2>BLUF — Bottom Line Up Front</h2>
+      <p>Without BLUF, clients are left guessing at your conclusion:</p>
+      <div class="callout quote">“So this week we worked on 1,320 accounts, productivity improved, QA was strong, but AR increased slightly…” — the client is thinking: <em>“Is this good or bad?”</em></div>
+      <p>Lead with the takeaway. Support it with detail afterward — never the other way around.</p>
+    </div>
+
+    <div class="section" id="story">
+      <span class="section-label">Technique 2</span>
+      <h2>Storytelling for Data</h2>
+      <p>Present insights as a compelling narrative: <strong>Problem → Insight → Action → Impact.</strong></p>
+      <div class="activity" id="act-storySeq"></div>
+    </div>
+
+    <div class="section" id="fae">
+      <span class="section-label">Technique 3</span>
+      <h2>Frame, Anchor, Explain</h2>
+      <p>Set the overall context first, highlight progress already made, then discuss challenges and next actions.</p>
+      <div class="two-col">
+        <div class="card">
+          <h3 style="color:var(--c-primary);">Frame</h3>
+          <p style="font-size:.9rem;color:var(--text-muted);">Set the overall context first.<br><em>“Overall, our trip went really well.”</em></p>
+        </div>
+        <div class="card">
+          <h3 style="color:var(--c-teal-blue);">Anchor</h3>
+          <p style="font-size:.9rem;color:var(--text-muted);">Highlight progress or success already made.<br><em>“We managed to visit most of the places we planned.”</em></p>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <h3 style="color:var(--c-sea-green);">Explain</h3>
+        <p style="font-size:.9rem;color:var(--text-muted);">Then discuss the challenge and the adjustment.<br><em>“However, we missed one attraction because of heavy traffic, so we adjusted the schedule for the next day.”</em></p>
+      </div>
+    </div>
+
+    <div class="section" id="wiifm">
+      <span class="section-label">Setting Clear Expectations</span>
+      <h2>WIIFM — “What's In It For Me?”</h2>
+      <p>Clear expectations create value — not just for leaders, but for the clients you serve. Sort each benefit below.</p>
+      <div class="activity" id="act-wiifmSort"></div>
+    </div>
+
+    <div class="section" id="deliver">
+      <span class="section-label">Applied Scenario</span>
+      <h2>Activity: Deliver This Data</h2>
+      <div class="activity" id="act-deliverDataSim"></div>
+    </div>
+
+    <div class="section" id="cfu">
+      <span class="section-label">Check for Understanding</span>
+      <h2>Quick Knowledge Check</h2>
+      <div class="activity" id="quiz-m2cfu"></div>
+    </div>
+
+    <div class="module-footer" id="module-footer"></div>
+  </div>
+</main>
+
+<script src="js/course-config.js?v=2"></script>
+<script src="js/storage.js?v=2"></script>
+<script src="js/timer.js?v=2"></script>
+<script src="js/activities.js?v=2"></script>
+<script src="js/quiz.js?v=2"></script>
+<script src="js/nav.js?v=2"></script>
+<script src="data/module-2.js?v=2"></script>
+<script>
+  (function(){
+    Activities.sequence(document.getElementById("act-storySeq"), MODULE_DATA.storySeq);
+    Activities.bucketSort(document.getElementById("act-wiifmSort"), MODULE_DATA.wiifmSort);
+    Activities.branchingSim(document.getElementById("act-deliverDataSim"), MODULE_DATA.deliverDataSim);
+
+    renderQuiz(
+      document.getElementById("quiz-m2cfu"),
+      MODULE_DATA.m2cfu,
+      function(){ return Storage.getCfu("m2"); },
+      function(state){ Storage.saveCfu("m2", state); },
+      { onComplete: function(){ NAV.refreshHeaderProgress(); } }
+    );
+
+    NAV.init("m2");
+  })();
+</script>
+</body>
+</html>

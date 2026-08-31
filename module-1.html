@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 1: Reframing the Role of Communication — ECC Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=2">
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="container">
+
+    <div class="section">
+      <span class="section-label">Module 1 of 5</span>
+      <h1>Reframing the Role of Communication</h1>
+      <p class="lead" style="color:var(--text-muted);">Most leaders think their job is to report updates and share data. In reality, communication is how clients evaluate your reliability, transparency, and leadership.</p>
+      <div class="toc">
+        <a href="#why">Why It Matters</a>
+        <a href="#levels">Communication Levels</a>
+        <a href="#channels">Choosing Channels</a>
+        <a href="#roleplay">Reframe the Response</a>
+        <a href="#cfu">Check for Understanding</a>
+      </div>
+    </div>
+
+    <div class="section" id="why">
+      <span class="section-label">Why It Matters</span>
+      <h2>You're not just reporting. You're being evaluated.</h2>
+      <p>When something goes wrong — a delayed update, a missed timeline — the client isn't only listening to the information. They're also silently asking themselves three questions:</p>
+      <div class="chip-list">
+        <span class="chip">Do they understand the situation?</span>
+        <span class="chip">Do they have control over it?</span>
+        <span class="chip">Can I trust them to manage this?</span>
+      </div>
+      <div class="callout quote">“A good Team Leader doesn't just manage tasks. A good Team Leader manages perception, expectation, and trust — through communication.”</div>
+    </div>
+
+    <div class="section" id="levels">
+      <span class="section-label">Framework</span>
+      <h2>Client Communication Levels</h2>
+      <p>Every update can operate at one of three levels. Strong updates often move through all three in a single message.</p>
+      <div class="activity" id="act-commLevels"></div>
+    </div>
+
+    <div class="section" id="channels">
+      <span class="section-label">Framework</span>
+      <h2>Choosing the Right Communication Channel</h2>
+      <p>Two factors — how urgent the message is, and how sensitive it is — determine the best mode. Understanding a client's preferences and adapting to them matters as much as the framework itself.</p>
+      <div class="activity" id="act-channelMatch"></div>
+    </div>
+
+    <div class="section" id="roleplay">
+      <span class="section-label">Applied Scenario</span>
+      <h2>Reframe the Defensive Response</h2>
+      <p>In the live workshop, one leader played the client while another responded using only “Yes, but…” language — so the room could hear how defensive it sounds. Round 2 replaced it with acknowledgment. Play both rounds below.</p>
+      <div class="activity" id="act-defensiveSim"></div>
+    </div>
+
+    <div class="section" id="cfu">
+      <span class="section-label">Check for Understanding</span>
+      <h2>Quick Knowledge Check</h2>
+      <div class="activity" id="quiz-m1cfu"></div>
+    </div>
+
+    <div class="module-footer" id="module-footer"></div>
+  </div>
+</main>
+
+<script src="js/course-config.js?v=2"></script>
+<script src="js/storage.js?v=2"></script>
+<script src="js/timer.js?v=2"></script>
+<script src="js/activities.js?v=2"></script>
+<script src="js/quiz.js?v=2"></script>
+<script src="js/nav.js?v=2"></script>
+<script src="data/module-1.js?v=2"></script>
+<script>
+  (function(){
+    Activities.flipCards(document.getElementById("act-commLevels"), MODULE_DATA.commLevels);
+    Activities.matching(document.getElementById("act-channelMatch"), MODULE_DATA.channelMatch);
+    Activities.branchingSim(document.getElementById("act-defensiveSim"), MODULE_DATA.defensiveSim);
+
+    renderQuiz(
+      document.getElementById("quiz-m1cfu"),
+      MODULE_DATA.m1cfu,
+      function(){ return Storage.getCfu("m1"); },
+      function(state){ Storage.saveCfu("m1", state); },
+      { onComplete: function(){ NAV.refreshHeaderProgress(); } }
+    );
+
+    NAV.init("m1");
+  })();
+</script>
+</body>
+</html>

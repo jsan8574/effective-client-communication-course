@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Module 5: Best Practices for Ongoing Client Communication — ECC Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=2">
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="container">
+
+    <div class="section">
+      <span class="section-label">Module 5 of 5</span>
+      <h1>Best Practices for Ongoing Client Communication</h1>
+      <p class="lead" style="color:var(--text-muted);">The relationship doesn't end when the project ships. These habits are what keep it healthy.</p>
+      <div class="toc">
+        <a href="#feedback">Client Feedback</a>
+        <a href="#rhythm">Follow-Up & Accountability</a>
+        <a href="#glossary">Key Terms Glossary</a>
+        <a href="#video">Discussion Prompt</a>
+        <a href="#reflect">Your Commitment</a>
+        <a href="#cfu">Check for Understanding</a>
+      </div>
+    </div>
+
+    <div class="section" id="feedback">
+      <span class="section-label">Continuous Improvement</span>
+      <h2>Client Feedback & Continuous Improvement</h2>
+      <p>How you request and use feedback shapes long-term relationships as much as the work itself does.</p>
+      <div class="activity" id="act-feedbackCards"></div>
+    </div>
+
+    <div class="section" id="rhythm">
+      <span class="section-label">Framework</span>
+      <h2>Follow-Up & Accountability</h2>
+      <p>Regular check-ins, honest progress updates, and clear documentation are what keep clients informed and confident between milestones.</p>
+      <div class="activity" id="act-followUpSort"></div>
+    </div>
+
+    <div class="section" id="glossary">
+      <span class="section-label">Glossary</span>
+      <h2>Key Terms</h2>
+      <div class="activity" id="act-glossaryCards"></div>
+    </div>
+
+    <div class="section" id="video">
+      <span class="section-label">Discussion Prompt</span>
+      <h2>Video Time</h2>
+      <p>The original workshop paused here for a short video and open discussion on staying calm and professional with an upset client, active listening, and offering solutions instead of excuses. Use this as a personal reflection prompt (or a discussion starter with your own team):</p>
+      <div class="callout quote">Think of the last time a client was visibly frustrated with you or your team. What did you do first — defend, explain, or listen? What would A-E-O-F have changed about that conversation?</div>
+    </div>
+
+    <div class="section" id="reflect">
+      <span class="section-label">Your Commitment</span>
+      <h2>Start, Stop, or Strengthen</h2>
+      <p>What is one communication habit you'll start, stop, or strengthen after this course?</p>
+      <div class="chip-list">
+        <span class="chip">Active listening</span>
+        <span class="chip">Clear, concise communication</span>
+        <span class="chip">Managing expectations</span>
+        <span class="chip">Handling difficult situations</span>
+        <span class="chip">Building long-term relationships</span>
+      </div>
+      <div class="activity reflection">
+        <div class="activity-head">
+          <span class="activity-type">Reflection</span>
+          <span class="save-indicator" id="reflect-saved">Saved</span>
+        </div>
+        <textarea id="reflect-text" placeholder="Write a few sentences here. This is saved automatically and will appear in your downloadable PDF of answers."></textarea>
+      </div>
+    </div>
+
+    <div class="section" id="cfu">
+      <span class="section-label">Check for Understanding</span>
+      <h2>Quick Knowledge Check</h2>
+      <div class="activity" id="quiz-m5cfu"></div>
+    </div>
+
+    <div class="module-footer" id="module-footer"></div>
+  </div>
+</main>
+
+<script src="js/course-config.js?v=2"></script>
+<script src="js/storage.js?v=2"></script>
+<script src="js/timer.js?v=2"></script>
+<script src="js/activities.js?v=2"></script>
+<script src="js/quiz.js?v=2"></script>
+<script src="js/nav.js?v=2"></script>
+<script src="data/module-5.js?v=2"></script>
+<script>
+  (function(){
+    Activities.flipCards(document.getElementById("act-feedbackCards"), MODULE_DATA.feedbackCards);
+    Activities.bucketSort(document.getElementById("act-followUpSort"), MODULE_DATA.followUpSort);
+    Activities.flipCards(document.getElementById("act-glossaryCards"), MODULE_DATA.glossaryCards);
+
+    var textarea = document.getElementById("reflect-text");
+    var savedIndicator = document.getElementById("reflect-saved");
+    textarea.value = Storage.getReflection("m5_habit_reflection");
+    var saveDebounce = null;
+    textarea.addEventListener("input", function(){
+      if (saveDebounce) clearTimeout(saveDebounce);
+      saveDebounce = setTimeout(function(){
+        Storage.saveReflection("m5_habit_reflection", textarea.value);
+        savedIndicator.classList.add("show");
+        setTimeout(function(){ savedIndicator.classList.remove("show"); }, 1500);
+      }, 400);
+    });
+
+    renderQuiz(
+      document.getElementById("quiz-m5cfu"),
+      MODULE_DATA.m5cfu,
+      function(){ return Storage.getCfu("m5"); },
+      function(state){ Storage.saveCfu("m5", state); },
+      { onComplete: function(){ NAV.refreshHeaderProgress(); } }
+    );
+
+    NAV.init("m5");
+  })();
+</script>
+</body>
+</html>

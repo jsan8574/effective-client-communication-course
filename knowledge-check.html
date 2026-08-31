@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Final Knowledge Check — ECC Course</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css?v=2">
+</head>
+<body>
+<header class="site-header" id="site-header"></header>
+
+<main>
+  <div class="container">
+    <div class="section">
+      <span class="section-label">Graded Assessment</span>
+      <h1>Final Knowledge Check</h1>
+      <p class="lead" style="color:var(--text-muted);">20 questions covering all five modules. Your score here becomes the score on your certificate — retake it anytime to improve it.</p>
+      <div id="progress-note" class="callout" style="display:none;"></div>
+    </div>
+
+    <div class="section">
+      <div class="activity">
+        <div class="activity-head">
+          <span class="activity-type">Your Name</span>
+        </div>
+        <p class="activity-instructions">This is the name that will appear on your certificate.</p>
+        <input type="text" id="learner-name" placeholder="Full name" style="width:100%;max-width:360px;padding:11px 14px;border:1.5px solid var(--border-soft);border-radius:8px;font-size:.95rem;font-family:inherit;">
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="activity" id="quiz-kc"></div>
+    </div>
+
+    <div class="section" id="kc-cta" style="display:none;">
+      <div class="card" style="text-align:center;">
+        <h3>Nice work.</h3>
+        <p style="color:var(--text-muted);">Your score has been saved. Head to your certificate to see your total time invested and download it.</p>
+        <a class="btn" href="certificate.html">Go to Certificate →</a>
+      </div>
+    </div>
+
+    <div class="module-footer" id="module-footer" style="border-top:none;">
+      <div><a class="btn ghost" href="index.html">← Dashboard</a></div>
+      <div></div>
+    </div>
+  </div>
+</main>
+
+<script src="js/course-config.js?v=2"></script>
+<script src="js/storage.js?v=2"></script>
+<script src="js/timer.js?v=2"></script>
+<script src="js/quiz.js?v=2"></script>
+<script src="js/nav.js?v=2"></script>
+<script src="data/knowledge-check.js?v=2"></script>
+<script>
+  (function(){
+    var nameInput = document.getElementById("learner-name");
+    nameInput.value = Storage.getLearnerName();
+    nameInput.addEventListener("input", function(){ Storage.setLearnerName(nameInput.value); });
+
+    var pct = Storage.courseProgressPct();
+    var moduleAvg = 0;
+    window.COURSE.modules.forEach(function(m){ moduleAvg += Storage.moduleProgressPct(m.id); });
+    moduleAvg = Math.round(moduleAvg / window.COURSE.modules.length);
+    if (moduleAvg < 100){
+      var note = document.getElementById("progress-note");
+      note.style.display = "block";
+      note.textContent = "Heads up: you're at " + moduleAvg + "% through the five modules. You can take this assessment anytime, but you'll get the most out of it after finishing each module.";
+    }
+
+    renderQuiz(
+      document.getElementById("quiz-kc"),
+      KC_DATA,
+      function(){ return Storage.getKc(); },
+      function(state){ Storage.saveKc(state); },
+      {
+        introText: "Answer every question, then submit to see your score.",
+        submitLabel: "Submit Knowledge Check",
+        onComplete: function(){
+          document.getElementById("kc-cta").style.display = "block";
+          NAV.refreshHeaderProgress();
+        }
+      }
+    );
+
+    NAV.init();
+  })();
+</script>
+</body>
+</html>
