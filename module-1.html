@@ -7,25 +7,37 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=5">
+<link rel="stylesheet" href="css/styles.css?v=6">
 </head>
 <body>
 <header class="site-header" id="site-header"></header>
 
 <main>
   <div class="container">
+    <div class="module-shell">
+    <aside class="progress-sidebar" id="progress-sidebar"></aside>
+    <div class="module-main">
 
-    <div class="section">
-      <span class="section-label">Module 1 of 5</span>
-      <h1>Reframing the Role of Communication</h1>
-      <p class="lead" style="color:var(--text-muted);">Most leaders think their job is to report updates and share data. In reality, communication is how clients evaluate your reliability, transparency, and leadership.</p>
-      <div class="toc">
-        <a href="#why">Why It Matters</a>
-        <a href="#levels">Communication Levels</a>
-        <a href="#channels">Choosing Channels</a>
-        <a href="#roleplay">Reframe the Response</a>
-        <a href="#cfu">Check for Understanding</a>
+    <span class="part-label">Module 1 of 5</span>
+    <h1>Reframing the Role of Communication</h1>
+    <p class="module-subtitle">Why this session exists — communication as a trust signal, not a status report.</p>
+
+    <div class="session-overview">
+      <p>Most leaders think their job is to report updates and share data. In reality, communication is how clients evaluate your reliability, transparency, and leadership.</p>
+      <h4>What's in this module</h4>
+      <div class="stat-tile-row">
+        <div class="stat-tile"><div class="num">3</div><div class="cap">Hands-on activities</div></div>
+        <div class="stat-tile"><div class="num">~15 min</div><div class="cap">Estimated time</div></div>
+        <div class="stat-tile"><div class="num">3</div><div class="cap">Communication levels covered</div></div>
       </div>
+    </div>
+
+    <div class="section-list">
+      <a class="section-list-row" href="#why"><span class="sl-title">Why It Matters</span><span class="sl-time">Reading</span></a>
+      <a class="section-list-row" href="#levels"><span class="sl-title">Communication Levels</span><span class="sl-time">Framework</span></a>
+      <a class="section-list-row" href="#channels"><span class="sl-title">Choosing Channels</span><span class="sl-time">Framework</span></a>
+      <a class="section-list-row" href="#roleplay"><span class="sl-title">Reframe the Response</span><span class="sl-time">Applied Scenario</span></a>
+      <a class="section-list-row" href="#cfu"><span class="sl-title">Check for Understanding</span><span class="sl-time">Quiz</span></a>
     </div>
 
     <div class="section" id="why">
@@ -68,17 +80,20 @@
     </div>
 
     <div class="module-footer" id="module-footer"></div>
+
+    </div><!-- /.module-main -->
+    </div><!-- /.module-shell -->
   </div>
 </main>
 
-<script src="js/course-config.js?v=5"></script>
-<script src="js/storage.js?v=5"></script>
-<script src="js/timer.js?v=5"></script>
-<script src="js/personalize.js?v=5"></script>
-<script src="js/activities.js?v=5"></script>
-<script src="js/quiz.js?v=5"></script>
-<script src="js/nav.js?v=5"></script>
-<script src="data/module-1.js?v=5"></script>
+<script src="js/course-config.js?v=6"></script>
+<script src="js/storage.js?v=6"></script>
+<script src="js/timer.js?v=6"></script>
+<script src="js/personalize.js?v=6"></script>
+<script src="js/activities.js?v=6"></script>
+<script src="js/quiz.js?v=6"></script>
+<script src="js/nav.js?v=6"></script>
+<script src="data/module-1.js?v=6"></script>
 <script>
   (function(){
     Activities.flipCards(document.getElementById("act-commLevels"), MODULE_DATA.commLevels);

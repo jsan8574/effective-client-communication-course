@@ -7,26 +7,38 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=5">
+<link rel="stylesheet" href="css/styles.css?v=6">
 </head>
 <body>
 <header class="site-header" id="site-header"></header>
 
 <main>
   <div class="container">
+    <div class="module-shell">
+    <aside class="progress-sidebar" id="progress-sidebar"></aside>
+    <div class="module-main">
 
-    <div class="section">
-      <span class="section-label">Module 3 of 5</span>
-      <h1>Navigating Conflict & Difficult Conversations</h1>
-      <p class="lead" style="color:var(--text-muted);">Most leaders see conflict as something to avoid. Strong leaders see it as something to use.</p>
-      <div class="toc">
-        <a href="#reframe">Reframing Conflict</a>
-        <a href="#types">3 Types of Difficult Conversations</a>
-        <a href="#situations">Classify the Situation</a>
-        <a href="#aeof">The A-E-O-F Framework</a>
-        <a href="#roleplay">Live Roleplay</a>
-        <a href="#cfu">Check for Understanding</a>
+    <span class="part-label">Module 3 of 5</span>
+    <h1>Navigating Conflict &amp; Difficult Conversations</h1>
+    <p class="module-subtitle">Why this session exists — treating conflict as signal instead of something to avoid.</p>
+
+    <div class="session-overview">
+      <p>Most leaders see conflict as something to avoid. Strong leaders see it as something to use.</p>
+      <h4>What's in this module</h4>
+      <div class="stat-tile-row">
+        <div class="stat-tile"><div class="num">4</div><div class="cap">Hands-on activities</div></div>
+        <div class="stat-tile"><div class="num">~18 min</div><div class="cap">Estimated time</div></div>
+        <div class="stat-tile"><div class="num">4-step</div><div class="cap">A-E-O-F framework</div></div>
       </div>
+    </div>
+
+    <div class="section-list">
+      <a class="section-list-row" href="#reframe"><span class="sl-title">Reframing Conflict</span><span class="sl-time">Mindset Shift</span></a>
+      <a class="section-list-row" href="#types"><span class="sl-title">3 Types of Difficult Conversations</span><span class="sl-time">Activity</span></a>
+      <a class="section-list-row" href="#situations"><span class="sl-title">Classify the Situation</span><span class="sl-time">Activity</span></a>
+      <a class="section-list-row" href="#aeof"><span class="sl-title">The A-E-O-F Framework</span><span class="sl-time">Activity</span></a>
+      <a class="section-list-row" href="#roleplay"><span class="sl-title">Live Roleplay</span><span class="sl-time">Applied Scenario</span></a>
+      <a class="section-list-row" href="#cfu"><span class="sl-title">Check for Understanding</span><span class="sl-time">Quiz</span></a>
     </div>
 
     <div class="section" id="reframe">
@@ -68,17 +80,20 @@
     </div>
 
     <div class="module-footer" id="module-footer"></div>
+
+    </div><!-- /.module-main -->
+    </div><!-- /.module-shell -->
   </div>
 </main>
 
-<script src="js/course-config.js?v=5"></script>
-<script src="js/storage.js?v=5"></script>
-<script src="js/timer.js?v=5"></script>
-<script src="js/personalize.js?v=5"></script>
-<script src="js/activities.js?v=5"></script>
-<script src="js/quiz.js?v=5"></script>
-<script src="js/nav.js?v=5"></script>
-<script src="data/module-3.js?v=5"></script>
+<script src="js/course-config.js?v=6"></script>
+<script src="js/storage.js?v=6"></script>
+<script src="js/timer.js?v=6"></script>
+<script src="js/personalize.js?v=6"></script>
+<script src="js/activities.js?v=6"></script>
+<script src="js/quiz.js?v=6"></script>
+<script src="js/nav.js?v=6"></script>
+<script src="data/module-3.js?v=6"></script>
 <script>
   (function(){
     Activities.flipCards(document.getElementById("act-convoTypes"), MODULE_DATA.convoTypes);

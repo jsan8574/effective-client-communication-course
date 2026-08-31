@@ -113,28 +113,55 @@
       var mod = window.COURSE.getModule(moduleId);
       return mod ? mod.activities : [];
     },
-    moduleProgressPct: function(moduleId){
+    // { done, total } across a module's hands-on activities, its video and
+    // reflection (when it has them), and its Check for Understanding — the
+    // same "sections" unit shown in the sidebar and the dashboard cover card.
+    moduleSectionsProgress: function(moduleId){
       var mod = window.COURSE.getModule(moduleId);
-      if (!mod) return 0;
-      var totalSteps = mod.activities.length + 1; // + CFU
-      var done = 0;
+      if (!mod) return { done:0, total:0 };
       var m = ensureModule(moduleId);
+      var total = window.COURSE.sectionsTotal(mod);
+      var done = 0;
       mod.activities.forEach(function(aid){
         if (m.activities[aid] && m.activities[aid].complete) done++;
       });
+      if (mod.hasVideo){
+        var v = m.activities.sparkVideo;
+        if (v && (v.watched || v.optOut || v.watchedElsewhere)) done++;
+      }
+      if (mod.hasReflection){
+        // assumes the "<moduleId>_habit_reflection" key convention used by m5's
+        // reflection textarea; if a future module's reflection uses a different
+        // key, update this lookup (or move the key into course-config.js).
+        if ((state.reflections[moduleId + "_habit_reflection"] || "").trim()) done++;
+      }
       if (m.cfu && m.cfu.complete) done++;
-      return Math.round((done/totalSteps)*100);
+      return { done: done, total: total };
+    },
+    moduleProgressPct: function(moduleId){
+      var p = this.moduleSectionsProgress(moduleId);
+      if (!p.total) return 0;
+      return Math.round((p.done/p.total)*100);
     },
     isModuleComplete: function(moduleId){
       return this.moduleProgressPct(moduleId) >= 100;
     },
-    courseProgressPct: function(){
+    // { done, total } across every module's sections plus the final Knowledge Check.
+    courseSectionsProgress: function(){
       var self = this;
-      var mods = window.COURSE.modules;
-      var sum = 0;
-      mods.forEach(function(m){ sum += self.moduleProgressPct(m.id); });
-      var kcWeight = self.getKc().complete ? 100 : 0;
-      return Math.round((sum + kcWeight) / (mods.length + 1));
+      var total = 1; // knowledge check
+      var done = self.getKc().complete ? 1 : 0;
+      window.COURSE.modules.forEach(function(m){
+        var p = self.moduleSectionsProgress(m.id);
+        total += p.total;
+        done += p.done;
+      });
+      return { done: done, total: total };
+    },
+    courseProgressPct: function(){
+      var p = this.courseSectionsProgress();
+      if (!p.total) return 0;
+      return Math.round((p.done/p.total)*100);
     },
 
     // ---- flush immediately (call before navigating away / exporting) ----

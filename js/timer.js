@@ -36,14 +36,36 @@
 
   if (isVisible()) start();
 
+  // Separate, finer-grained (1s) local counter purely for a live "Time on
+  // course" readout in the header — decoupled from the 5s persistence tick
+  // above so the on-screen number can update smoothly every second without
+  // hitting localStorage that often. Same visibility gating, so it never
+  // runs ahead of what actually gets saved.
+  var loadTotalMs = Storage.getTotalTimeMs();
+  var liveElapsedMs = 0;
+  setInterval(function(){ if (isVisible()) liveElapsedMs += 1000; }, 1000);
+
   window.CourseTimer = {
     getTotalMs: function(){ return Storage.getTotalTimeMs(); },
+    getLiveMs: function(){ return loadTotalMs + liveElapsedMs; },
     formatDuration: function(ms){
       var totalMin = Math.max(0, Math.round(ms / 60000));
       var h = Math.floor(totalMin / 60);
       var m = totalMin % 60;
       if (h <= 0) return m + " min";
       return h + "h " + m + "m";
+    },
+    // "Time on course" clock format: "47m 37s" / "1h 05m 12s" / "8s".
+    formatClock: function(ms){
+      var totalSec = Math.max(0, Math.round(ms / 1000));
+      var h = Math.floor(totalSec / 3600);
+      var m = Math.floor((totalSec % 3600) / 60);
+      var s = totalSec % 60;
+      var mm = (h > 0 && m < 10) ? "0" + m : String(m);
+      var ss = s < 10 ? "0" + s : String(s);
+      if (h > 0) return h + "h " + mm + "m " + ss + "s";
+      if (m > 0) return m + "m " + ss + "s";
+      return s + "s";
     }
   };
 })();

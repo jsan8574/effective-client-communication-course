@@ -8,43 +8,38 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=5">
+<link rel="stylesheet" href="css/styles.css?v=6">
 </head>
 <body>
 <header class="site-header" id="site-header"></header>
 
 <section class="hero">
   <div class="container">
-    <span class="hero-badge">Self-Paced · 5 Modules · ~2 hrs</span>
+    <span class="hero-eyebrow">Self-Paced Course · Learning &amp; Development</span>
     <h1>Effective Client Communication Strategies</h1>
     <p id="hero-welcome" style="display:none;"></p>
     <p>Learn how top-performing team leaders manage perception, trust, and conflict through intentional communication — reframing routine updates into strategic, confidence-building conversations.</p>
-    <div class="btn-row">
-      <a href="module-1.html" class="btn" style="background:#fff;color:var(--c-primary);">Start Module 1</a>
-      <a href="#modules" class="btn ghost" style="border-color:rgba(255,255,255,.6);color:#fff;">View All Modules</a>
-    </div>
+    <div class="hero-chip-row" id="hero-chip-row"></div>
+    <div class="btn-row" id="hero-cta-row"></div>
   </div>
 </section>
 
 <main>
   <div class="container">
 
-    <div class="section" id="modules">
-      <span class="section-label">Course Path</span>
-      <h2>Five modules, at your own pace</h2>
-      <p class="lead" style="color:var(--text-muted);">Each module includes short readings from the facilitator's own notes, one or more hands-on activities, and a quick knowledge check. Your progress, quiz answers, and reflections are saved automatically in this browser as you go.</p>
-
-      <div class="module-grid" id="module-grid"></div>
+    <div class="hero-cover-card" id="modules">
+      <span class="cover-label">What You'll Cover</span>
+      <div id="cover-rows"></div>
     </div>
 
-    <div class="two-col section">
+    <div class="two-col section" style="margin-top:36px;">
       <div class="card">
         <h3>Final Knowledge Check</h3>
         <p style="color:var(--text-muted);font-size:.92rem;">A comprehensive, graded assessment pulling questions from all five modules. Your score feeds directly into your certificate.</p>
         <a href="knowledge-check.html" class="btn secondary">Go to Knowledge Check</a>
       </div>
       <div class="card">
-        <h3>Certificate & Answers</h3>
+        <h3>Certificate &amp; Answers</h3>
         <p style="color:var(--text-muted);font-size:.92rem;">Once you've completed the course, generate a certificate with your name, time invested, and score — or download a PDF of everything you wrote and answered.</p>
         <a href="certificate.html" class="btn secondary">Go to Certificate</a>
       </div>
@@ -55,30 +50,56 @@
 
 <div class="footer-note">Effective Client Communication Strategies · Self-paced edition · Built for personal and team use</div>
 
-<script src="js/course-config.js?v=5"></script>
-<script src="js/storage.js?v=5"></script>
-<script src="js/timer.js?v=5"></script>
-<script src="js/personalize.js?v=5"></script>
-<script src="js/nav.js?v=5"></script>
+<script src="js/course-config.js?v=6"></script>
+<script src="js/storage.js?v=6"></script>
+<script src="js/timer.js?v=6"></script>
+<script src="js/personalize.js?v=6"></script>
+<script src="js/nav.js?v=6"></script>
 <script>
   (function(){
-    var grid = document.getElementById("module-grid");
+    // ---- hero chip row: real course scope, not placeholder numbers ----
+    var chipRow = document.getElementById("hero-chip-row");
+    chipRow.innerHTML =
+      '<span class="hero-chip"><span class="ico">⏱</span>' + window.COURSE.formatMinutes(window.COURSE.totalMinutes) + '</span>' +
+      '<span class="hero-chip"><span class="ico">🎥</span>' + window.COURSE.requiredVideoCount + ' required video' + (window.COURSE.requiredVideoCount === 1 ? '' : 's') + '</span>' +
+      '<span class="hero-chip"><span class="ico">📝</span>Interactive activities in every module</span>' +
+      '<span class="hero-chip"><span class="ico">🏆</span>Certificate on completion</span>';
+
+    // ---- "what you'll cover" cover card: numbered / checkmarked rows ----
+    var coverRows = document.getElementById("cover-rows");
     window.COURSE.modules.forEach(function(mod){
-      var pct = Storage.moduleProgressPct(mod.id);
-      var statusLabel = pct >= 100 ? "done" : (pct > 0 ? "progress" : "locked");
-      var statusText = pct >= 100 ? "Completed" : (pct > 0 ? "In Progress" : "Not Started");
+      var p = Storage.moduleSectionsProgress(mod.id);
+      var done = p.total > 0 && p.done >= p.total;
       var a = document.createElement("a");
       a.href = mod.path;
-      a.className = "card module-card";
+      a.className = "cover-row" + (done ? " done" : "");
       a.innerHTML =
-        '<span class="m-num">Module ' + mod.num + '</span>' +
-        '<h3>' + mod.title + '</h3>' +
-        '<p class="m-desc">' + mod.desc + '</p>' +
-        '<div class="mini-bar"><span style="width:' + pct + '%"></span></div>' +
-        '<div class="m-meta"><span>' + pct + '% complete</span><span class="status-pill ' + statusLabel + '">' + statusText + '</span></div>';
-      grid.appendChild(a);
+        '<span class="badge">' + (done ? "✓" : mod.num) + '</span>' +
+        '<span class="cr-title">' + mod.title + '</span>' +
+        '<span class="cr-status">' + p.done + '/' + p.total + ' sections</span>';
+      coverRows.appendChild(a);
     });
+
+    // ---- hero CTAs: resume at the first incomplete module, or the
+    // knowledge check once every module is done ----
+    var ctaRow = document.getElementById("hero-cta-row");
+    function refreshCtas(){
+      var started = Storage.courseProgressPct() > 0;
+      var target = window.COURSE.knowledgeCheckPath;
+      var label = "Start Module 1 →";
+      for (var i=0;i<window.COURSE.modules.length;i++){
+        var m = window.COURSE.modules[i];
+        if (!Storage.isModuleComplete(m.id)){ target = m.path; break; }
+      }
+      if (started) label = "Resume Course →";
+      ctaRow.innerHTML =
+        '<a href="' + target + '" class="btn primary-bright">' + label + '</a>' +
+        '<a href="certificate.html" class="btn outline-light">Go to Certificate</a>';
+    }
+    refreshCtas();
+
     NAV.init();
+    setInterval(refreshCtas, 3000);
 
     var welcome = document.getElementById("hero-welcome");
     function refreshWelcome(){

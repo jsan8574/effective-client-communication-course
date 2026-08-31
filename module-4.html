@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=5">
+<link rel="stylesheet" href="css/styles.css?v=6">
 <style>
   .video-embed{ position:relative; width:100%; padding-top:56.25%; border-radius:var(--radius-md); overflow:hidden; background:#000; box-shadow:var(--shadow-md); }
   .video-embed iframe{ position:absolute; inset:0; width:100%; height:100%; border:0; }
@@ -32,19 +32,31 @@
 
 <main>
   <div class="container">
+    <div class="module-shell">
+    <aside class="progress-sidebar" id="progress-sidebar"></aside>
+    <div class="module-main">
 
-    <div class="section">
-      <span class="section-label">Module 4 of 5</span>
-      <h1>Executive Presence & Influence</h1>
-      <p class="lead" style="color:var(--text-muted);">Skills get you results. Presence earns you trust.</p>
-      <div class="toc">
-        <a href="#video">Watch: SPARK in Action</a>
-        <a href="#spark">The SPARK Model</a>
-        <a href="#pyramid">The Pyramid Principle</a>
-        <a href="#questions">Powerful Questions</a>
-        <a href="#roleplay">What Would You Do?</a>
-        <a href="#cfu">Check for Understanding</a>
+    <span class="part-label">Module 4 of 5</span>
+    <h1>Executive Presence &amp; Influence</h1>
+    <p class="module-subtitle">Why this session exists — skills get you results, presence earns you trust.</p>
+
+    <div class="session-overview">
+      <p>Skills get you results. Presence earns you trust. This module opens with a short required video, then builds on it with the SPARK model, the Pyramid Principle, and a live decision simulation.</p>
+      <h4>What's in this module</h4>
+      <div class="stat-tile-row">
+        <div class="stat-tile"><div class="num">1</div><div class="cap">Required video</div></div>
+        <div class="stat-tile"><div class="num">~18 min</div><div class="cap">Estimated time</div></div>
+        <div class="stat-tile"><div class="num">5-trait</div><div class="cap">SPARK model</div></div>
       </div>
+    </div>
+
+    <div class="section-list">
+      <a class="section-list-row" href="#video"><span class="sl-title">Watch: SPARK in Action</span><span class="sl-time">Required Video</span></a>
+      <a class="section-list-row" href="#spark" id="sl-spark"><span class="sl-title">The SPARK Model</span><span class="sl-time">Activity</span></a>
+      <a class="section-list-row" href="#pyramid" id="sl-pyramid"><span class="sl-title">The Pyramid Principle</span><span class="sl-time">Activity</span></a>
+      <a class="section-list-row" href="#questions" id="sl-questions"><span class="sl-title">Powerful Questions</span><span class="sl-time">Reading</span></a>
+      <a class="section-list-row" href="#roleplay" id="sl-roleplay"><span class="sl-title">What Would You Do?</span><span class="sl-time">Applied Scenario</span></a>
+      <a class="section-list-row" href="#cfu" id="sl-cfu"><span class="sl-title">Check for Understanding</span><span class="sl-time">Quiz</span></a>
     </div>
 
     <div class="section" id="video">
@@ -139,17 +151,20 @@
     </div><!-- /#module-body-gated -->
 
     <div class="module-footer" id="module-footer"></div>
+
+    </div><!-- /.module-main -->
+    </div><!-- /.module-shell -->
   </div>
 </main>
 
-<script src="js/course-config.js?v=5"></script>
-<script src="js/storage.js?v=5"></script>
-<script src="js/timer.js?v=5"></script>
-<script src="js/personalize.js?v=5"></script>
-<script src="js/activities.js?v=5"></script>
-<script src="js/quiz.js?v=5"></script>
-<script src="js/nav.js?v=5"></script>
-<script src="data/module-4.js?v=5"></script>
+<script src="js/course-config.js?v=6"></script>
+<script src="js/storage.js?v=6"></script>
+<script src="js/timer.js?v=6"></script>
+<script src="js/personalize.js?v=6"></script>
+<script src="js/activities.js?v=6"></script>
+<script src="js/quiz.js?v=6"></script>
+<script src="js/nav.js?v=6"></script>
+<script src="data/module-4.js?v=6"></script>
 <script>
   (function(){
     /* ---------------------------------------------------------
@@ -188,14 +203,26 @@
 
     function isUnlocked(){ return vState.watched || vState.optOut || vState.watchedElsewhere; }
 
+    var lockedSlRows = ["sl-spark","sl-pyramid","sl-questions","sl-roleplay","sl-cfu"]
+      .map(function(id){ return document.getElementById(id); });
+
     function applyLockState(){
-      if (isUnlocked()){
+      var unlocked = isUnlocked();
+      if (unlocked){
         lockedContent.classList.remove("locked");
         lockBanner.style.display = "none";
       } else {
         lockedContent.classList.add("locked");
         lockBanner.style.display = "block";
       }
+      // Mirror the same locked/unlocked state onto the section-list rows in
+      // the sidebar's-neighbor "part list" so a learner can see at a glance
+      // which parts they haven't reached yet, matching the sidebar's own
+      // not-yet-reached styling.
+      lockedSlRows.forEach(function(row){
+        if (!row) return;
+        row.classList.toggle("locked", !unlocked);
+      });
     }
 
     function updateProgressUI(){

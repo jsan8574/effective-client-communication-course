@@ -7,19 +7,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=5">
+<link rel="stylesheet" href="css/styles.css?v=6">
 </head>
 <body>
 <header class="site-header" id="site-header"></header>
 
 <main>
   <div class="container">
-    <div class="section">
-      <span class="section-label">Graded Assessment</span>
-      <h1>Final Knowledge Check</h1>
-      <p class="lead" style="color:var(--text-muted);">20 questions covering all five modules. Your score here becomes the score on your certificate — retake it anytime to improve it.</p>
-      <div id="progress-note" class="callout" style="display:none;"></div>
-    </div>
+    <div class="module-shell">
+    <aside class="progress-sidebar" id="progress-sidebar"></aside>
+    <div class="module-main">
+
+    <span class="part-label">Graded Assessment</span>
+    <h1>Final Knowledge Check</h1>
+    <p class="module-subtitle">20 questions covering all five modules — your score here becomes the score on your certificate.</p>
+    <div id="progress-note" class="callout" style="display:none;"></div>
 
     <div class="section">
       <div class="activity">
@@ -47,16 +49,19 @@
       <div><a class="btn ghost" href="index.html">← Dashboard</a></div>
       <div></div>
     </div>
+
+    </div><!-- /.module-main -->
+    </div><!-- /.module-shell -->
   </div>
 </main>
 
-<script src="js/course-config.js?v=5"></script>
-<script src="js/storage.js?v=5"></script>
-<script src="js/timer.js?v=5"></script>
-<script src="js/personalize.js?v=5"></script>
-<script src="js/quiz.js?v=5"></script>
-<script src="js/nav.js?v=5"></script>
-<script src="data/knowledge-check.js?v=5"></script>
+<script src="js/course-config.js?v=6"></script>
+<script src="js/storage.js?v=6"></script>
+<script src="js/timer.js?v=6"></script>
+<script src="js/personalize.js?v=6"></script>
+<script src="js/quiz.js?v=6"></script>
+<script src="js/nav.js?v=6"></script>
+<script src="data/knowledge-check.js?v=6"></script>
 <script>
   (function(){
     var nameInput = document.getElementById("learner-name");

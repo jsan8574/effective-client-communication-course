@@ -50,16 +50,36 @@ data/knowledge-check.js  final assessment question bank
 ## Cache-busting
 
 Every CSS/JS `<script>`/`<link>` tag is loaded with a `?v=N` query string
-(currently `?v=5`). **Bump this number on every future edit to `css/styles.css`
+(currently `?v=6`). **Bump this number on every future edit to `css/styles.css`
 or any file in `js/`**, across every HTML file that references it — otherwise
 returning learners' browsers may keep serving a cached, stale copy. A quick way
 to do this repo-wide:
 
 ```
-sed -i 's/?v=5/?v=6/g' *.html
+sed -i 's/?v=6/?v=7/g' *.html
 ```
 
 (bump the numbers to whatever the next version should be).
+
+## Visual design (v6 redesign)
+
+The dashboard and every module/knowledge-check/certificate page use a dark-navy
+chrome — a sticky header with a slim teal progress line that fills as the
+learner completes sections, plus a live "time on course" readout (`js/timer.js`'s
+`getLiveMs()`/`formatClock()`) — and a persistent left-hand "Your Progress"
+sidebar (`renderProgressSidebar()` in `js/nav.js`) listing every module with a
+numbered/checkmarked status row and a Certificate row. The dashboard's dark
+hero (eyebrow label, chip row of real course-scope facts, CTA buttons) overlaps
+a floating white "What You'll Cover" card, and each module opens with a
+"Session Overview" card (intro + 3 content-derived stat tiles) followed by a
+restyled table-of-contents ("section list") before the module's actual content.
+
+This is a from-scratch design interpretation (no new brand hues — the navy/
+bright-teal tokens in `:root` are a darker register of the existing palette),
+not a copy of any third-party product's branding. The unit shown throughout
+("X of Y sections") is `COURSE.sectionsTotal()` / `Storage.moduleSectionsProgress()`
+in `js/course-config.js` / `js/storage.js` — each module's hands-on activities
+plus its video/reflection (if it has one) plus its Check for Understanding.
 
 ## Extending the course (adding Module 2, 3, … as a series)
 

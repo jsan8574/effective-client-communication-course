@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/styles.css?v=5">
+<link rel="stylesheet" href="css/styles.css?v=6">
 <style>
   #cert-canvas{ width:100%; max-width:900px; height:auto; border-radius:var(--radius-md); box-shadow:var(--shadow-lg); display:block; margin:0 auto; border:1px solid var(--border-soft); }
   .stat-row{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin:20px 0; }
@@ -21,11 +21,13 @@
 
 <main>
   <div class="container">
-    <div class="section">
-      <span class="section-label">Wrap-Up</span>
-      <h1>Your Certificate</h1>
-      <p class="lead" style="color:var(--text-muted);">Enter your name if you haven't already, then generate your certificate below.</p>
-    </div>
+    <div class="module-shell">
+    <aside class="progress-sidebar" id="progress-sidebar"></aside>
+    <div class="module-main">
+
+    <span class="part-label">Wrap-Up</span>
+    <h1>Your Certificate</h1>
+    <p class="module-subtitle">Enter your name if you haven't already, then generate your certificate below.</p>
 
     <div class="section">
       <div class="activity">
@@ -53,17 +55,20 @@
       <div><a class="btn ghost" href="index.html">← Dashboard</a></div>
       <div></div>
     </div>
+
+    </div><!-- /.module-main -->
+    </div><!-- /.module-shell -->
   </div>
 </main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script src="js/course-config.js?v=5"></script>
-<script src="js/storage.js?v=5"></script>
-<script src="js/timer.js?v=5"></script>
-<script src="js/personalize.js?v=5"></script>
-<script src="js/nav.js?v=5"></script>
-<script src="js/certificate.js?v=5"></script>
-<script src="js/pdf-export.js?v=5"></script>
+<script src="js/course-config.js?v=6"></script>
+<script src="js/storage.js?v=6"></script>
+<script src="js/timer.js?v=6"></script>
+<script src="js/personalize.js?v=6"></script>
+<script src="js/nav.js?v=6"></script>
+<script src="js/certificate.js?v=6"></script>
+<script src="js/pdf-export.js?v=6"></script>
 <script>
   (function(){
     var nameInput = document.getElementById("learner-name");

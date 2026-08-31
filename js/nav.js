@@ -18,16 +18,9 @@
     mount.innerHTML =
       '<div class="container">' +
         '<a class="brand" href="index.html"><span>' + window.COURSE.title + '</span></a>' +
-        '<div class="header-progress">' +
-          '<span id="hdr-pct-label">' + pct + '% complete</span>' +
-          '<span class="bar"><span id="hdr-pct-bar" style="width:' + pct + '%"></span></span>' +
-        '</div>' +
-        '<div class="header-links">' +
-          '<a href="index.html">Dashboard</a>' +
-          '<a href="' + window.COURSE.knowledgeCheckPath + '">Knowledge Check</a>' +
-          '<a href="' + window.COURSE.certificatePath + '">Certificate</a>' +
-        '</div>' +
-      '</div>';
+        '<div class="header-timer"><span class="dot"></span><span id="hdr-timer-label">Time on course —</span></div>' +
+      '</div>' +
+      '<div class="header-progress-line"><span id="hdr-pct-bar" style="width:' + pct + '%"></span></div>';
   }
 
   /* ---------------------------------------------------------
@@ -77,6 +70,53 @@
     });
   }
 
+  /* ---------------------------------------------------------
+     Sidebar — sticky "YOUR PROGRESS" card shown on every module,
+     knowledge-check, and certificate page: overall % + section
+     count, then a row per module (numbered / checkmarked, current
+     module highlighted), plus a Certificate row at the bottom.
+  --------------------------------------------------------- */
+  function renderProgressSidebar(currentModuleId){
+    var mount = document.getElementById("progress-sidebar");
+    if (!mount) return;
+    var overall = Storage.courseSectionsProgress();
+    var pct = Storage.courseProgressPct();
+
+    var rows = window.COURSE.modules.map(function(m){
+      var p = Storage.moduleSectionsProgress(m.id);
+      var done = p.total > 0 && p.done >= p.total;
+      var isCurrent = m.id === currentModuleId;
+      var cls = "sidebar-row" + (done ? " done" : "") + (isCurrent ? " current" : "");
+      return (
+        '<a class="' + cls + '" href="' + m.path + '">' +
+          '<span class="badge">' + (done ? "✓" : m.num) + '</span>' +
+          '<span class="info">' +
+            '<span class="title">' + m.title + '</span>' +
+            '<span class="sub">' + p.done + '/' + p.total + ' sections</span>' +
+          '</span>' +
+        '</a>'
+      );
+    }).join("");
+
+    var kcDone = !!Storage.getKc().complete;
+    var onCertPage = window.location.pathname.indexOf(window.COURSE.certificatePath) !== -1;
+
+    mount.innerHTML =
+      '<span class="sidebar-eyebrow">Your Progress</span>' +
+      '<div class="sidebar-pct" id="sb-pct">' + pct + '% complete</div>' +
+      '<div class="sidebar-sub" id="sb-sub">' + overall.done + ' of ' + overall.total + ' sections done</div>' +
+      '<div class="sidebar-list">' +
+        rows +
+        '<a class="sidebar-row cert' + (onCertPage ? " current" : "") + '" href="' + window.COURSE.certificatePath + '">' +
+          '<span class="badge">🏆</span>' +
+          '<span class="info">' +
+            '<span class="title">Certificate</span>' +
+            '<span class="sub">' + (kcDone ? "Ready to claim" : "Unlocks after Knowledge Check") + '</span>' +
+          '</span>' +
+        '</a>' +
+      '</div>';
+  }
+
   function renderModuleFooter(moduleId){
     var mount = document.getElementById("module-footer");
     if (!mount) return;
@@ -91,23 +131,37 @@
     mount.innerHTML = '<div>'+left+'</div><div>'+right+'</div>';
   }
 
-  function refreshHeaderProgress(){
+  function refreshHeaderTimer(){
+    if (!window.CourseTimer) return;
+    var label = document.getElementById("hdr-timer-label");
+    if (label) label.textContent = "Time on course " + CourseTimer.formatClock(CourseTimer.getLiveMs());
+  }
+
+  function refreshHeaderProgress(currentModuleId){
     var pct = Storage.courseProgressPct();
     var bar = document.getElementById("hdr-pct-bar");
-    var label = document.getElementById("hdr-pct-label");
     if (bar) bar.style.width = pct + "%";
-    if (label) label.textContent = pct + "% complete";
+    refreshHeaderTimer();
+    // Cheap to fully re-render given the course only has a handful of
+    // modules — keeps the sidebar's numbers/checkmarks live as the learner
+    // completes sections on the current page, without hand-patching DOM.
+    if (document.getElementById("progress-sidebar")) renderProgressSidebar(currentModuleId);
   }
 
   window.NAV = {
     init: function(moduleId){
       renderHeader();
+      renderProgressSidebar(moduleId);
       if (moduleId) renderModuleFooter(moduleId);
       maybeShowNameGate();
-      // progress can change as the learner interacts with activities on this
-      // page, so keep the header bar live without a reload.
-      setInterval(refreshHeaderProgress, 3000);
+      refreshHeaderTimer();
+      // Time-on-course ticks every second; progress/sidebar re-render on a
+      // lighter 3s cadence since they only change when the learner finishes
+      // a section, not continuously.
+      setInterval(refreshHeaderTimer, 1000);
+      setInterval(function(){ refreshHeaderProgress(moduleId); }, 3000);
     },
-    refreshHeaderProgress: refreshHeaderProgress
+    refreshHeaderProgress: refreshHeaderProgress,
+    renderProgressSidebar: renderProgressSidebar
   };
 })();
